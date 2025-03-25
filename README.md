@@ -20,11 +20,10 @@
 41143256  黎丞家  
 41143268  許豪中
 
-# 系統需求說明
-
+# 系統需求說明  
 前端介面：HTML/CSS/JavaScript（Bootstrap 建議）  
 後端開發：ASP.NET MVC / Flask / Node.js（依實作技術）  
-資料庫系統：mariaDB  
+資料庫系統：MariaDB  
 
 # 完整性限制
 
