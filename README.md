@@ -23,9 +23,9 @@
 41143268  許豪中
 
 # 系統需求說明
-前端介面：HTML/CSS/JavaScript（Bootstrap 建議）
-後端開發：ASP.NET MVC / Flask / Node.js（依實作技術）
-資料庫系統：mariaDB
+前端介面：HTML/CSS/JavaScript（Bootstrap 建議） 
+後端開發：ASP.NET MVC / Flask / Node.js（依實作技術） 
+資料庫系統：mariaDB 
 
 # 完整性限制
 
