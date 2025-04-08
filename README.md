@@ -31,7 +31,7 @@
 
 # 系統需求說明  
 前端介面：HTML/CSS/JavaScript（Bootstrap 建議）  (暫定)  
-後端開發：ASP.NET MVC / Flask / Node.js（依實作技術）  
+後端開發：ASP.NET MVC / Flask / Python  
 資料庫系統：MariaDB  
 
 # 完整性限制
