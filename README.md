@@ -35,6 +35,10 @@
 資料庫系統：MariaDB  
 
 # 完整性限制
+![食譜資料表](https://github.com/user-attachments/assets/38f2c7fe-3705-41ea-b03b-f6bb7bbac7a4)
+![使用者資料表](https://github.com/user-attachments/assets/a9d35ad9-666f-497f-bd5b-52fbe733484e)
+![使用者持有食材](https://github.com/user-attachments/assets/66e01658-aace-4215-9def-256a1341ab38)
+![食譜推薦結果](https://github.com/user-attachments/assets/5f6f98be-8d65-4d67-b35b-9d807eafb670)
 
 # ER Diagram
 ![image](https://github.com/user-attachments/assets/e9e88809-ef0b-4aaa-9a1e-9c553d607310)
