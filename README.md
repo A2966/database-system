@@ -54,5 +54,6 @@ Recipe_Ingredient
         ON DELETE CASCADE  
 
 # ER Diagram
+![image](https://github.com/user-attachments/assets/3210de3b-0df8-438a-9bc1-a7191198fdbc)
 
 # 詳細說明
