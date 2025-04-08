@@ -54,6 +54,7 @@
         ON DELETE CASCADE  
 
 # ER Diagram
-![image](https://github.com/user-attachments/assets/3210de3b-0df8-438a-9bc1-a7191198fdbc)
+![image](https://github.com/user-attachments/assets/e9e88809-ef0b-4aaa-9a1e-9c553d607310)
+
 
 # 詳細說明
