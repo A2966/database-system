@@ -35,7 +35,7 @@
 資料庫系統：MariaDB  
 
 # 完整性限制
-***Recipe:***  
+***Recipe:**  
     cID INT : PRIMARY KEY, -- 主鍵：不能為 NULL 且唯一  
     recipe_Name : VARCHAR(255) NOT NULL, -- 食譜名稱不能為空  
     instructions : TEXT NOT NULL, -- 製作步驟不能為空  
