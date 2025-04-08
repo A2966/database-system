@@ -42,14 +42,15 @@
 
 # ER Diagram
 ![image](https://github.com/user-attachments/assets/73ce79ed-2156-4b2a-bcff-ba7195cc0f08)
-食譜(Recipe) 資料表屬性
+
+***食譜(Recipe) 資料表屬性**
 食譜ID(Recipe_ID)
 食譜名稱(Recipe_Name)
 食譜所需食材(Ingredient)
 步驟(Instructions)
 食譜照片(Recipe_photo_url)
 
-使用者(User) 資料表屬性
+***使用者(User) 資料表屬性**
 使用者ID(User_ID)
 LINE ID(LINE_ID)
 使用者狀態(User_State)
@@ -57,14 +58,14 @@ LINE ID(LINE_ID)
 使用者上一次輸入食材(User_Last_Ingredients)
 使用者上一次推薦食譜(User_Last_recipes)
 
-使用者持有食材(User_Ingredients) 資料表屬性
+***使用者持有食材(User_Ingredients) 資料表屬性**
 使用者食材ID(User_Ingredients_ID)
 LINE ID(LINE_ID)
 持有食材名稱(Database_Ingredients)
 數量(Quantity)
 
 
-食譜推薦結果(Recipe_recommend) 資料表屬性
+***食譜推薦結果(Recipe_recommend) 資料表屬性**
 使用者ID(User_ID)
 使用者食材ID(User_Ingredients_ID)
 食譜ID(Recipe_ID)
