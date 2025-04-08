@@ -35,6 +35,23 @@
 資料庫系統：MariaDB  
 
 # 完整性限制
+Recipe:
+    cID INT PRIMARY KEY, -- 主鍵：不能為 NULL 且唯一
+    recipe_Name VARCHAR(255) NOT NULL, -- 食譜名稱不能為空
+    instructions TEXT NOT NULL, -- 製作步驟不能為空
+    recipe_url VARCHAR(500), -- 可為 NULL，但格式應為網址（前端可檢查）
+    recipe_photo_url VARCHAR(500) -- 可為 NULL，儲存圖片路徑
+ Ingredient:
+    iID INT PRIMARY KEY, -- 主鍵
+    ingredient_Name VARCHAR(100) NOT NULL UNIQUE -- 不允許重複
+Recipe_Ingredient
+    cID INT, -- 外鍵
+    iID INT, -- 外鍵
+    PRIMARY KEY (cID, iID), -- 組合主鍵，避免重複配對
+    FOREIGN KEY (cID) REFERENCES Recipe(cID)
+        ON DELETE CASCADE,
+    FOREIGN KEY (iID) REFERENCES Ingredient(iID)
+        ON DELETE CASCADE
 
 # ER Diagram
 
