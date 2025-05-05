@@ -169,7 +169,7 @@ CREATE TABLE Recipe (
 CREATE TABLE User (
     User_ID INT PRIMARY KEY AUTO_INCREMENT,
     LINE_ID VARCHAR(50) NOT NULL UNIQUE,
-    User_State VARCHAR(20) DEFAULT 'active',
+    User_State VARCHAR(20) DEFAULT 'None',
     Change_id INT,
     User_Last_Ingredients TEXT,
     User_Last_recipes TEXT
@@ -181,7 +181,7 @@ CREATE TABLE User (
 |----------|----------|------|------|
 | User_ID | INT | 使用者唯一識別碼 | 主鍵，自動遞增 |
 | LINE_ID | VARCHAR(50) | LINE平台使用者ID | 不可重複 |
-| User_State | VARCHAR(20) | 使用者狀態 | 預設值：'active' |
+| User_State | VARCHAR(20) | 使用者狀態 | 預設值：'None' |
 | Change_id | INT | 欲更改食材ID | 可為空 |
 | User_Last_Ingredients | TEXT | 上次輸入食材 | 可為空 |
 | User_Last_recipes | TEXT | 上次推薦食譜 | 可為空 |
