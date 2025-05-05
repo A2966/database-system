@@ -60,10 +60,10 @@
 ## 資料庫結構
 
 ### 完整性限制
-![食譜資料表](https://github.com/user-attachments/assets/38f2c7fe-3705-41ea-b03b-f6bb7bbac7a4)
-![使用者資料表](https://github.com/user-attachments/assets/a9d35ad9-666f-497f-bd5b-52fbe733484e)
-![使用者持有食材](https://github.com/user-attachments/assets/66e01658-aace-4215-9def-256a1341ab38)
-![食譜推薦結果](https://github.com/user-attachments/assets/5f6f98be-8d65-4d67-b35b-9d807eafb670)
+![食譜資料表](https://github.com/user-attachments/assets/f08bb198-1d85-4072-abc8-1e9d6952bf56)
+![使用者資料表](https://github.com/user-attachments/assets/3a40e985-cf64-4cf5-bfc1-b98190802f81)
+![使用者持有食材](https://github.com/user-attachments/assets/f373aa99-32eb-4063-929f-37ce48a9e716)
+![食譜推薦結果](https://github.com/user-attachments/assets/8a5a1ab3-c619-420a-b24e-ae46c5790d0c)
 
 ### ER Diagram
 ![ER Diagram](https://github.com/user-attachments/assets/73ce79ed-2156-4b2a-bcff-ba7195cc0f08)
