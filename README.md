@@ -77,3 +77,152 @@ LINE ID(LINE_ID)
 一個推薦結果只會對應到一個使用者，但一個使用者可以有很多推薦結果。   
 •「User_Ingredients」與「Recipe_Recommend」之間有一對多(1..n)的關係。   
 一個推薦結果會對應到多個使用者食材，而每個使用者食材必須對應到一個推薦結果。   
+
+# 食譜管理系統資料庫結構文件
+> Author: @ken930805
+> 
+> Last Updated: 2025-05-05 16:52:00 UTC
+
+## 📋 目錄
+- [資料表概覽](#資料表概覽)
+- [詳細資料表結構](#詳細資料表結構)
+  - [Recipe (食譜資料表)](#1-recipe-食譜資料表)
+  - [User (使用者資料表)](#2-user-使用者資料表)
+  - [User_Ingredients (使用者持有食材資料表)](#3-user_ingredients-使用者持有食材資料表)
+  - [Recipe_recommend (食譜推薦結果資料表)](#4-recipe_recommend-食譜推薦結果資料表)
+- [使用範例](#使用範例)
+
+## 資料表概覽
+本系統包含四個主要資料表，用於管理食譜推薦系統：
+- Recipe：儲存食譜基本資訊
+- User：管理使用者資料
+- User_Ingredients：追蹤使用者擁有的食材
+- Recipe_recommend：記錄推薦結果
+
+## 詳細資料表結構
+
+### 1. Recipe (食譜資料表)
+
+```sql
+CREATE TABLE Recipe (
+    Recipe_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Recipe_Name VARCHAR(100) NOT NULL,
+    Ingredient TEXT NOT NULL,
+    Instructions TEXT NOT NULL,
+    Recipe_photo_url VARCHAR(255)
+);
+```
+
+#### 欄位說明
+| 欄位名稱 | 資料型態 | 說明 | 備註 |
+|----------|----------|------|------|
+| Recipe_ID | INT | 食譜唯一識別碼 | 主鍵，自動遞增 |
+| Recipe_Name | VARCHAR(100) | 食譜名稱 | 不可為空 |
+| Ingredient | TEXT | 所需食材清單 | 不可為空 |
+| Instructions | TEXT | 烹飪步驟說明 | 不可為空 |
+| Recipe_photo_url | VARCHAR(255) | 食譜照片URL | 可為空 |
+
+### 2. User (使用者資料表)
+
+```sql
+CREATE TABLE User (
+    User_ID INT PRIMARY KEY AUTO_INCREMENT,
+    LINE_ID VARCHAR(50) NOT NULL UNIQUE,
+    User_State VARCHAR(20) DEFAULT 'active',
+    Change_id INT,
+    User_Last_Ingredients TEXT,
+    User_Last_recipes TEXT
+);
+```
+
+#### 欄位說明
+| 欄位名稱 | 資料型態 | 說明 | 備註 |
+|----------|----------|------|------|
+| User_ID | INT | 使用者唯一識別碼 | 主鍵，自動遞增 |
+| LINE_ID | VARCHAR(50) | LINE平台使用者ID | 不可重複 |
+| User_State | VARCHAR(20) | 使用者狀態 | 預設值：'active' |
+| Change_id | INT | 欲更改食材ID | 可為空 |
+| User_Last_Ingredients | TEXT | 上次輸入食材 | 可為空 |
+| User_Last_recipes | TEXT | 上次推薦食譜 | 可為空 |
+
+### 3. User_Ingredients (使用者持有食材資料表)
+
+```sql
+CREATE TABLE User_Ingredients (
+    User_Ingredients_ID INT PRIMARY KEY AUTO_INCREMENT,
+    LINE_ID VARCHAR(50) NOT NULL,
+    Database_Ingredients VARCHAR(100) NOT NULL,
+    Quantity INT DEFAULT 1,
+    FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID)
+);
+```
+
+#### 欄位說明
+| 欄位名稱 | 資料型態 | 說明 | 備註 |
+|----------|----------|------|------|
+| User_Ingredients_ID | INT | 食材記錄識別碼 | 主鍵，自動遞增 |
+| LINE_ID | VARCHAR(50) | 使用者LINE ID | 外鍵參照User表 |
+| Database_Ingredients | VARCHAR(100) | 食材名稱 | 不可為空 |
+| Quantity | INT | 數量 | 預設值：1 |
+
+### 4. Recipe_recommend (食譜推薦結果資料表)
+
+```sql
+CREATE TABLE Recipe_recommend (
+    User_ID INT NOT NULL,
+    User_Ingredients_ID INT NOT NULL,
+    Recipe_ID INT NOT NULL,
+    PRIMARY KEY (User_ID, User_Ingredients_ID, Recipe_ID),
+    FOREIGN KEY (User_ID) REFERENCES User(User_ID),
+    FOREIGN KEY (User_Ingredients_ID) REFERENCES User_Ingredients(User_Ingredients_ID),
+    FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID)
+);
+```
+
+#### 欄位說明
+| 欄位名稱 | 資料型態 | 說明 | 備註 |
+|----------|----------|------|------|
+| User_ID | INT | 使用者ID | 複合主鍵之一 |
+| User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
+| Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
+
+## 使用範例
+
+### 查詢使用者食材
+```sql
+SELECT ui.Database_Ingredients, ui.Quantity
+FROM User_Ingredients ui
+JOIN User u ON ui.LINE_ID = u.LINE_ID
+WHERE u.LINE_ID = 'U123456789';
+```
+
+### 查詢推薦食譜
+```sql
+SELECT r.Recipe_Name, r.Ingredient, r.Instructions
+FROM Recipe_recommend rr
+JOIN Recipe r ON rr.Recipe_ID = r.Recipe_ID
+WHERE rr.User_ID = 1;
+```
+
+### 根據食材查找食譜
+```sql
+SELECT DISTINCT r.*
+FROM Recipe r
+JOIN Recipe_recommend rr ON r.Recipe_ID = rr.Recipe_ID
+JOIN User_Ingredients ui ON rr.User_Ingredients_ID = ui.User_Ingredients_ID
+WHERE ui.Database_Ingredients IN ('番茄', '雞蛋');
+```
+
+## 注意事項
+1. 所有外鍵關係需確保資料一致性
+2. 建議定期備份資料庫
+3. 考慮為常用查詢建立索引提升效能
+
+## 未來優化方向
+- [ ] 添加食材保存期限欄位
+- [ ] 建立食譜分類系統
+- [ ] 實作使用者評分功能
+- [ ] 優化推薦演算法
+
+---
+*此文件最後更新於 2025-05-05 16:52:00 UTC by @ken930805*
