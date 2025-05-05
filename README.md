@@ -30,7 +30,7 @@
 41143268  許豪中
 
 # 系統需求說明  
-前端介面：LINE Bot​
+前端介面：LINE Bot​  
 後端開發：Flask / Python  
 資料庫系統：MariaDB  
 
