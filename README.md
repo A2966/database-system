@@ -1,5 +1,5 @@
 # 食譜整合與查詢資料庫系統
-
+整合網路上的食譜資料，並提供使用者透過所持有的食材查詢食譜。
 ## 📋 目錄
 - [應用情境與使用案例](#應用情境與使用案例)
 - [組員資訊](#組員資訊)
@@ -265,15 +265,7 @@ INSERT INTO User_Ingredients (LINE_ID, Database_Ingredients, Quantity) VALUES
 );
 ```
 
-#### 4. Recipe_recommend (食譜推薦結果資料表) 範例資料
-```sql
--- 新增食譜推薦結果範例
-INSERT INTO Recipe_recommend (User_ID, User_Ingredients_ID, Recipe_ID) VALUES
-(1, 1, 2),  -- 使用者1的番茄可用於番茄炒蛋
-(1, 2, 2),  -- 使用者1的雞蛋可用於番茄炒蛋
-(2, 3, 3),  -- 使用者2的高麗菜可用於清炒高麗菜
-(2, 4, 3);  -- 使用者2的蒜末可用於清炒高麗菜
-```
+
 
 
 
