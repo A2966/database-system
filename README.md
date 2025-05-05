@@ -228,5 +228,52 @@ CREATE TABLE Recipe_recommend (
 | User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
 | Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
 
+### 資料表範例資料
+
+#### 1. Recipe (食譜資料表) 範例資料
+```sql
+-- 新增食譜範例
+INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_photo_url) VALUES
+(
+    '蔥花炒蛋',
+    '蔥,雞蛋,鹽,胡椒粉',
+    '1. 雞蛋打散加入適量鹽調味\n2. 蔥切段\n3. 熱油鍋\n4. 倒入蛋液\n5. 加入蔥花\n6. 翻炒均勻\n7. 最後撒上胡椒粉調味',
+    'https://example.com/recipes/egg-with-green-onion.jpg'
+);
+```
+
+#### 2. User (使用者資料表) 範例資料
+```sql
+-- 新增使用者範例
+INSERT INTO User (LINE_ID, User_State, User_Last_Ingredients, User_Last_recipes) VALUES
+(
+    'Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx1',
+    'None',
+    '番茄,雞蛋',
+    '1,2'
+);
+```
+
+#### 3. User_Ingredients (使用者持有食材資料表) 範例資料
+```sql
+-- 新增使用者食材範例
+INSERT INTO User_Ingredients (LINE_ID, Database_Ingredients, Quantity) VALUES
+(
+    'Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx1',
+    '番茄',
+    2
+);
+```
+
+#### 4. Recipe_recommend (食譜推薦結果資料表) 範例資料
+```sql
+-- 新增食譜推薦結果範例
+INSERT INTO Recipe_recommend (User_ID, User_Ingredients_ID, Recipe_ID) VALUES
+(1, 1, 2),  -- 使用者1的番茄可用於番茄炒蛋
+(1, 2, 2),  -- 使用者1的雞蛋可用於番茄炒蛋
+(2, 3, 3),  -- 使用者2的高麗菜可用於清炒高麗菜
+(2, 4, 3);  -- 使用者2的蒜末可用於清炒高麗菜
+```
+
 
 
