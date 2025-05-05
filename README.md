@@ -228,43 +228,5 @@ CREATE TABLE Recipe_recommend (
 | User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
 | Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
 
-### 使用範例
 
-#### 查詢使用者食材
-```sql
-SELECT ui.Database_Ingredients, ui.Quantity
-FROM User_Ingredients ui
-JOIN User u ON ui.LINE_ID = u.LINE_ID
-WHERE u.LINE_ID = 'U123456789';
-```
 
-#### 查詢推薦食譜
-```sql
-SELECT r.Recipe_Name, r.Ingredient, r.Instructions
-FROM Recipe_recommend rr
-JOIN Recipe r ON rr.Recipe_ID = r.Recipe_ID
-WHERE rr.User_ID = 1;
-```
-
-#### 根據食材查找食譜
-```sql
-SELECT DISTINCT r.*
-FROM Recipe r
-JOIN Recipe_recommend rr ON r.Recipe_ID = rr.Recipe_ID
-JOIN User_Ingredients ui ON rr.User_Ingredients_ID = ui.User_Ingredients_ID
-WHERE ui.Database_Ingredients IN ('番茄', '雞蛋');
-```
-
-### 注意事項
-1. 所有外鍵關係需確保資料一致性
-2. 建議定期備份資料庫
-3. 考慮為常用查詢建立索引提升效能
-
-### 未來優化方向
-- [ ] 添加食材保存期限欄位
-- [ ] 建立食譜分類系統
-- [ ] 實作使用者評分功能
-- [ ] 優化推薦演算法
-
----
-*此文件最後更新於 2025-05-05 16:52:00 UTC by @ken930805*
