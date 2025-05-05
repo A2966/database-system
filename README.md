@@ -132,7 +132,7 @@
   - [User (使用者資料表)](#2-user-使用者資料表)
   - [User_Ingredients (使用者持有食材資料表)](#3-user_ingredients-使用者持有食材資料表)
   - [Recipe_recommend (食譜推薦結果資料表)](#4-recipe_recommend-食譜推薦結果資料表)
-- [使用範例](#使用範例)
+- [資料表範例](#資料表範例)
 
 ### 資料表概覽
 本系統包含四個主要資料表，用於管理食譜推薦系統：
@@ -228,7 +228,7 @@ CREATE TABLE Recipe_recommend (
 | User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
 | Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
 
-### 資料表範例資料
+### 資料表範例
 
 #### 1. Recipe (食譜資料表) 範例資料
 ```sql
