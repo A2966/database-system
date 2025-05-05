@@ -6,6 +6,7 @@
 - [系統架構](#系統架構)
 - [資料庫結構](#資料庫結構)
 - [詳細說明](#詳細說明)
+- [資料庫Schema](#資料庫Schema)
 
 ## 應用情境與使用案例
 
@@ -121,9 +122,9 @@
 
 ---
 
-# 資料庫Schema
+## 資料庫Schema
 
-## 📋 目錄
+### 📋 目錄
 - [資料表概覽](#資料表概覽)
 - [詳細資料表結構](#詳細資料表結構)
   - [Recipe (食譜資料表)](#1-recipe-食譜資料表)
@@ -132,16 +133,16 @@
   - [Recipe_recommend (食譜推薦結果資料表)](#4-recipe_recommend-食譜推薦結果資料表)
 - [使用範例](#使用範例)
 
-## 資料表概覽
+### 資料表概覽
 本系統包含四個主要資料表，用於管理食譜推薦系統：
 - Recipe：儲存食譜基本資訊
 - User：管理使用者資料
 - User_Ingredients：追蹤使用者擁有的食材
 - Recipe_recommend：記錄推薦結果
 
-## 詳細資料表結構
+#### 詳細資料表結構
 
-### 1. Recipe (食譜資料表)
+#### 1. Recipe (食譜資料表)
 
 ```sql
 CREATE TABLE Recipe (
@@ -153,7 +154,7 @@ CREATE TABLE Recipe (
 );
 ```
 
-#### 欄位說明
+##### 欄位說明
 | 欄位名稱 | 資料型態 | 說明 | 備註 |
 |----------|----------|------|------|
 | Recipe_ID | INT | 食譜唯一識別碼 | 主鍵，自動遞增 |
@@ -162,7 +163,7 @@ CREATE TABLE Recipe (
 | Instructions | TEXT | 烹飪步驟說明 | 不可為空 |
 | Recipe_photo_url | VARCHAR(255) | 食譜照片URL | 可為空 |
 
-### 2. User (使用者資料表)
+#### 2. User (使用者資料表)
 
 ```sql
 CREATE TABLE User (
@@ -175,7 +176,7 @@ CREATE TABLE User (
 );
 ```
 
-#### 欄位說明
+##### 欄位說明
 | 欄位名稱 | 資料型態 | 說明 | 備註 |
 |----------|----------|------|------|
 | User_ID | INT | 使用者唯一識別碼 | 主鍵，自動遞增 |
@@ -185,7 +186,7 @@ CREATE TABLE User (
 | User_Last_Ingredients | TEXT | 上次輸入食材 | 可為空 |
 | User_Last_recipes | TEXT | 上次推薦食譜 | 可為空 |
 
-### 3. User_Ingredients (使用者持有食材資料表)
+#### 3. User_Ingredients (使用者持有食材資料表)
 
 ```sql
 CREATE TABLE User_Ingredients (
@@ -197,7 +198,7 @@ CREATE TABLE User_Ingredients (
 );
 ```
 
-#### 欄位說明
+##### 欄位說明
 | 欄位名稱 | 資料型態 | 說明 | 備註 |
 |----------|----------|------|------|
 | User_Ingredients_ID | INT | 食材記錄識別碼 | 主鍵，自動遞增 |
@@ -205,7 +206,7 @@ CREATE TABLE User_Ingredients (
 | Database_Ingredients | VARCHAR(100) | 食材名稱 | 不可為空 |
 | Quantity | INT | 數量 | 預設值：1 |
 
-### 4. Recipe_recommend (食譜推薦結果資料表)
+#### 4. Recipe_recommend (食譜推薦結果資料表)
 
 ```sql
 CREATE TABLE Recipe_recommend (
@@ -219,16 +220,16 @@ CREATE TABLE Recipe_recommend (
 );
 ```
 
-#### 欄位說明
+##### 欄位說明
 | 欄位名稱 | 資料型態 | 說明 | 備註 |
 |----------|----------|------|------|
 | User_ID | INT | 使用者ID | 複合主鍵之一 |
 | User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
 | Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
 
-## 使用範例
+### 使用範例
 
-### 查詢使用者食材
+#### 查詢使用者食材
 ```sql
 SELECT ui.Database_Ingredients, ui.Quantity
 FROM User_Ingredients ui
@@ -236,7 +237,7 @@ JOIN User u ON ui.LINE_ID = u.LINE_ID
 WHERE u.LINE_ID = 'U123456789';
 ```
 
-### 查詢推薦食譜
+#### 查詢推薦食譜
 ```sql
 SELECT r.Recipe_Name, r.Ingredient, r.Instructions
 FROM Recipe_recommend rr
@@ -244,7 +245,7 @@ JOIN Recipe r ON rr.Recipe_ID = r.Recipe_ID
 WHERE rr.User_ID = 1;
 ```
 
-### 根據食材查找食譜
+#### 根據食材查找食譜
 ```sql
 SELECT DISTINCT r.*
 FROM Recipe r
@@ -253,12 +254,12 @@ JOIN User_Ingredients ui ON rr.User_Ingredients_ID = ui.User_Ingredients_ID
 WHERE ui.Database_Ingredients IN ('番茄', '雞蛋');
 ```
 
-## 注意事項
+### 注意事項
 1. 所有外鍵關係需確保資料一致性
 2. 建議定期備份資料庫
 3. 考慮為常用查詢建立索引提升效能
 
-## 未來優化方向
+### 未來優化方向
 - [ ] 添加食材保存期限欄位
 - [ ] 建立食譜分類系統
 - [ ] 實作使用者評分功能
