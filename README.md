@@ -106,10 +106,6 @@
 
 ---
 
-![食譜資料表](https://github.com/user-attachments/assets/b654f910-51d2-4c88-bfef-e896fe29d220)
-![使用者資料表](https://github.com/user-attachments/assets/2a17b1b3-d871-4f59-bfcc-1a1f93cb2db2)
-![使用者持有食材](https://github.com/user-attachments/assets/6605d210-6fdc-488d-bb12-9966aa12fd1b)
-![食譜推薦結果](https://github.com/user-attachments/assets/db0c44f0-9f63-46d7-b83e-1ba0ed8b0dd0)
 
 
 ### ER Diagram
