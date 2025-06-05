@@ -30,9 +30,28 @@
 #### 3. 不熟悉食材或廚藝技巧
 有些人可能對某些食材不熟悉，或者不知道該如何烹調。透過系統的食譜推薦與詳細的製作步驟，使用者可以學習如何使用不同的食材來烹飪出美味的餐點。
 
-![image](https://github.com/user-attachments/assets/d2d7bfe0-fff6-4fc1-b585-3ca5a731ba84)
+![使用案例圖](https://github.com/user-attachments/assets/d2d7bfe0-fff6-4fc1-b585-3ca5a731ba84)
 
-![image](https://github.com/user-attachments/assets/f21126c9-21eb-4390-bab3-4693852f7022)
+![使用案例圖](https://github.com/user-attachments/assets/f21126c9-21eb-4390-bab3-4693852f7022)
+
+- 使用者
+  - 輸入食材
+  - 更改食材
+  - 推薦食譜
+  - 設定厭惡食材
+- 說明
+  - 使用者可以輸入想要的食材，對應「User_Ingredients(使用者持有食材表)」。
+  - 使用者輸入錯誤時可以更改所需的食材。
+  - 當使用者確認所需全部食材時，推薦出最相關食譜。
+  - 使用者可以自行設定討厭的食材，避免出現在食譜上面。對應「User(使用者表)」。
+
+- 管理者
+  - 新增食譜
+  - 修改食譜
+    
+- 說明
+  - 管理者可以新增新的食譜。
+  - 管理者可以修改現有的食譜。
 
 ## 系統需求說明
 
@@ -44,7 +63,7 @@
 - 支援使用者選擇並更改食材編號  
 
 ### 使用者偏好
-- 允許使用者輸入喜好與不喜歡的食材  
+- 允許使用者輸入不喜歡的食材  
 - 根據使用者偏好調整推薦結果  
 
 ### 推薦食譜
@@ -115,7 +134,8 @@
 
 
 ### ER Diagram
-![ER Diagram](https://github.com/user-attachments/assets/73ce79ed-2156-4b2a-bcff-ba7195cc0f08)
+![ER](https://github.com/user-attachments/assets/163fd506-6375-4f2d-b36c-e1636be39010)
+
 
 ### 資料表結構
 
