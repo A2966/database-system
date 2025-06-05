@@ -78,60 +78,135 @@
 - 後端開發：Flask / Python
 - 資料庫系統：phpMyAdmin
 
-## 資料庫結構
+# 資料庫結構說明
 
-### 完整性限制
-#### 📘 Recipe 資料表
+## 完整性限制
 
-| 欄位名稱               | 是否可為空 | 欄位說明     | 資料型態         | 值域/限制     | 實際資料舉例                        |
-| ------------------ | ----- | -------- | ------------ | --------- | ----------------------------- |
-| Recipe\_ID         | 否     | 食譜編號（主鍵） | INT          | 自動編號，唯一   | `101`                         |
-| Recipe\_Name       | 否     | 食譜名稱     | VARCHAR(100) | 任意名稱      | `羅宋湯`                |
-| Ingredient         | 否     | 使用食材列表  | TEXT         | 以文字描述所需食材，以,分隔| `番茄,馬鈴薯`    |
-| Instructions       | 是     | 食譜步驟說明   | TEXT         | 任意文字      | `半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁...`  |
-| Recipe\_url        | 是     | 詳細食譜連結   | TEXT         | 合法 URL    | `https://example.com/recipe`  |
-| Recipe\_photo\_url | 是     | 食譜圖片網址   | TEXT         | 合法圖片 URL  | `https://imgur.com/pasta.jpg` |
+### 📋 Recipe 資料表
 
----
+| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
+|---------|----------|------------|----------|------------|-------------|
+| Recipe_ID | INT | 否 | 食譜編號（主鍵） | 自動編號，唯一 | 101 |
+| Recipe_Name | VARCHAR(100) | 否 | 食譜名稱 | 任意名稱 | 羅宋湯 |
+| Ingredient | TEXT | 否 | 使用食材列表 | 以文字描述所需食材，以,分隔 | 番茄,馬鈴薯 |
+| Instructions | TEXT | 是 | 食譜步驟說明 | 任意文字 | 半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁... |
+| Recipe_url | TEXT | 是 | 詳細食譜連結 | 合法 URL | https://example.com/recipe |
+| Recipe_photo_url | TEXT | 是 | 食譜圖片網址 | 合法圖片 URL | https://imgur.com/pasta.jpg |
 
-#### 👤 User 資料表
+```sql
+CREATE TABLE Recipe (
+    Recipe_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Recipe_Name VARCHAR(100) NOT NULL,
+    Ingredient TEXT NOT NULL,
+    Instructions TEXT,
+    Recipe_url TEXT,
+    Recipe_photo_url TEXT
+);
 
-| 欄位名稱          | 是否可為空 | 欄位說明          | 資料型態        | 值域/限制      | 實際資料舉例            |
-| ------------- | ----- | ------------- | ----------- | ---------- | ----------------- |
-| LINE\_ID      | 否     | 使用者的 LINE 識別碼 | VARCHAR(50) | 唯一值，主鍵     | `U49bbc79ed892a8b8357a3699327850da` |
-| User\_State   | 是     | 使用者目前狀態       | VARCHAR(20) | 任意狀態描述文字   | `none`        |
-| user\_dislike | 是     | 使用者不喜歡的食材     | TEXT        | 以逗號分隔的食材名稱 | `洋蔥,青椒`    |
+-- 範例資料
+INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_url, Recipe_photo_url)
+VALUES ('羅宋湯', '番茄,馬鈴薯', '半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁...', 'https://example.com/recipe', 'https://imgur.com/pasta.jpg');
+```
 
----
+### 👤 User 資料表
 
-#### 🥬 Ingredient 資料表
+| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
+|---------|----------|------------|----------|------------|-------------|
+| LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 唯一值，主鍵 | U49bbc79ed892a8b8357a3699327850da |
+| User_State | VARCHAR(20) | 是 | 使用者目前狀態 | 任意狀態描述文字 | none |
+| user_dislike | TEXT | 是 | 使用者不喜歡的食材 | 以逗號分隔的食材名稱 | 洋蔥,青椒 |
 
-| 欄位名稱             | 是否可為空 | 欄位說明     | 資料型態        | 值域/限制  | 實際資料舉例   |
-| ---------------- | ----- | -------- | ----------- | ------ | -------- |
-| Ingredien\_ID    | 否     | 食材編號（主鍵） | INT         | 唯一     | `1`      |
-| Ingredient\_Name | 否     | 食材名稱     | VARCHAR(50) | 任意食材名稱 | `番茄` |
+```sql
+CREATE TABLE User (
+    LINE_ID VARCHAR(50) PRIMARY KEY,
+    User_State VARCHAR(20),
+    user_dislike TEXT
+);
 
----
+-- 範例資料
+INSERT INTO User (LINE_ID, User_State, user_dislike)
+VALUES ('U49bbc79ed892a8b8357a3699327850da', 'none', '洋蔥,青椒');
+```
 
-#### 🥣 User_Ingredients 資料表
+### 🥬 Ingredient 資料表
 
-| 欄位名稱        | 是否可為空 | 欄位說明          | 資料型態        | 值域/限制            | 實際資料舉例            |
-| ----------- | ----- | ------------- | ----------- | ---------------- | ----------------- |
-| LINE\_ID    | 否     | 使用者的 LINE 識別碼 | VARCHAR(50) | 參照 User.LINE\_ID | `U49bbc79ed892a8b8357a3699327850da` |
-| Ingredients | 否     | 食材名稱          | VARCHAR(50) | 任意食材名稱           | `馬鈴薯`             |
-| Quantity    | 是     | 食材數量          | VARCHAR(20) | > 0 的整數    | `2`        |
+| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
+|---------|----------|------------|----------|------------|-------------|
+| Ingredient_ID | INT | 否 | 食材編號（主鍵） | 唯一 | 1 |
+| Ingredient_Name | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 番茄 |
 
----
+```sql
+CREATE TABLE Ingredient (
+    Ingredient_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Ingredient_Name VARCHAR(50) NOT NULL
+);
 
-#### ⭐ Favorite_recipes 資料表
+-- 範例資料
+INSERT INTO Ingredient (Ingredient_Name) VALUES ('番茄');
+```
 
-| 欄位名稱           | 是否可為空 | 欄位說明          | 資料型態        | 值域/限制                    | 實際資料舉例                |
-| -------------- | ----- | ------------- | ----------- | ------------------------ | --------------------- |
-| LINE\_ID       | 否     | 使用者的 LINE 識別碼 | VARCHAR(50) | 參照 User.LINE\_ID         | `U49bbc79ed892a8b8357a3699327850da`     |
-| Recipe\_ID     | 否     | 食譜編號          | INT         | 參照 Recipe.Recipe\_ID     | `101`                 |
-| Favorite\_time | 否     | 加入最愛的時間       | DATETIME    | 格式：YYYY-MM-DD HH\:MM\:SS | `2025-06-05 15:00:00` |
-| Note           | 是     | 備註說明          | TEXT        | 任意文字                     | ``    |
+### 🥣 User_Ingredients 資料表
 
+| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
+|---------|----------|------------|----------|------------|-------------|
+| LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 參照 User.LINE_ID | U49bbc79ed892a8b8357a3699327850da |
+| Ingredients | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 馬鈴薯 |
+| Quantity | VARCHAR(20) | 是 | 食材數量 | > 0 的整數 | 2 |
+
+```sql
+CREATE TABLE User_Ingredients (
+    LINE_ID VARCHAR(50) NOT NULL,
+    Ingredients VARCHAR(50) NOT NULL,
+    Quantity VARCHAR(20),
+    FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
+    CHECK (CAST(Quantity AS SIGNED) > 0 OR Quantity IS NULL)
+);
+
+-- 範例資料
+INSERT INTO User_Ingredients (LINE_ID, Ingredients, Quantity)
+VALUES ('U49bbc79ed892a8b8357a3699327850da', '馬鈴薯', '2');
+```
+
+### ⭐ Favorite_recipes 資料表
+
+| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
+|---------|----------|------------|----------|------------|-------------|
+| LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 參照 User.LINE_ID | U49bbc79ed892a8b8357a3699327850da |
+| Recipe_ID | INT | 否 | 食譜編號 | 參照 Recipe.Recipe_ID | 101 |
+| Favorite_time | DATETIME | 否 | 加入最愛的時間 | 格式：YYYY-MM-DD HH:MM:SS | 2025-06-05 15:00:00 |
+| Note | TEXT | 是 | 備註說明 | 任意文字 |  |
+
+```sql
+CREATE TABLE Favorite_recipes (
+    LINE_ID VARCHAR(50) NOT NULL,
+    Recipe_ID INT NOT NULL,
+    Favorite_time DATETIME NOT NULL,
+    Note TEXT,
+    FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
+    FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID),
+    PRIMARY KEY (LINE_ID, Recipe_ID)
+);
+
+-- 範例資料
+INSERT INTO Favorite_recipes (LINE_ID, Recipe_ID, Favorite_time)
+VALUES ('U49bbc79ed892a8b8357a3699327850da', 101, '2025-06-05 15:00:00');
+```
+
+## 資料庫關聯圖
+
+使用者（User）可以:
+1. 擁有多個喜愛的食譜（Favorite_recipes）
+2. 擁有多個食材（User_Ingredients）
+3. 每個食譜（Recipe）可以被多個使用者收藏
+4. 每個食材（Ingredient）可以被多個使用者擁有
+
+## 注意事項
+
+1. 所有的 LINE_ID 都需要參照 User 表的 LINE_ID
+2. Recipe_ID 需要參照 Recipe 表的 Recipe_ID
+3. 日期時間格式統一使用 YYYY-MM-DD HH:MM:SS
+4. 食材數量必須為正整數
+5. URL 需要是合法的網址格式
 ---
 
 
