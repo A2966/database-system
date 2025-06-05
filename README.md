@@ -78,11 +78,13 @@
 - 後端開發：Flask / Python
 - 資料庫系統：phpMyAdmin
 
-# 資料庫結構說明
+# 資料庫結構與完整性限制
 
 ## 完整性限制
 
 ### 📋 Recipe 資料表
+
+#### 基本欄位
 
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
@@ -93,6 +95,17 @@
 | Recipe_url | TEXT | 是 | 詳細食譜連結 | 合法 URL | https://example.com/recipe |
 | Recipe_photo_url | TEXT | 是 | 食譜圖片網址 | 合法圖片 URL | https://imgur.com/pasta.jpg |
 
+#### 完整性限制說明
+
+| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
+|---------|-------------|-----------------|
+| Recipe_ID | 必須為大於 0 的整數，且不可為空，作為主鍵需保證唯一性 | 使用 AUTO_INCREMENT 確保遞增且唯一 |
+| Recipe_Name | 必須為長度 1 到 100 個字元的文字，不可為空 | CHECK (CHAR_LENGTH(Recipe_Name) BETWEEN 1 AND 100) |
+| Ingredient | 必須包含至少一項食材，不可為空 | CHECK (CHAR_LENGTH(Ingredient) > 0) |
+| Instructions | 可為空，若不為空則必須包含文字說明 | 無需額外限制 |
+| Recipe_url | 可為空，若不為空則必須是合法的 URL 格式 | CHECK (Recipe_url IS NULL OR Recipe_url REGEXP '^https?://[A-Za-z0-9\\-\\._~:/\\?#\\[\\]@!\\$&\'\\(\\)\\*\\+,;=]+$') |
+| Recipe_photo_url | 可為空，若不為空則必須是合法的圖片 URL 格式 | CHECK (Recipe_photo_url IS NULL OR Recipe_photo_url REGEXP '^https?://.*\\.(jpg\|jpeg\|png\|gif)$') |
+
 ```sql
 CREATE TABLE Recipe (
     Recipe_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -100,15 +113,17 @@ CREATE TABLE Recipe (
     Ingredient TEXT NOT NULL,
     Instructions TEXT,
     Recipe_url TEXT,
-    Recipe_photo_url TEXT
+    Recipe_photo_url TEXT,
+    CHECK (CHAR_LENGTH(Recipe_Name) BETWEEN 1 AND 100),
+    CHECK (CHAR_LENGTH(Ingredient) > 0),
+    CHECK (Recipe_url IS NULL OR Recipe_url REGEXP '^https?://[A-Za-z0-9\\-\\._~:/\\?#\\[\\]@!\\$&\'\\(\\)\\*\\+,;=]+$'),
+    CHECK (Recipe_photo_url IS NULL OR Recipe_photo_url REGEXP '^https?://.*\\.(jpg|jpeg|png|gif)$')
 );
-
--- 範例資料
-INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_url, Recipe_photo_url)
-VALUES ('羅宋湯', '番茄,馬鈴薯', '半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁...', 'https://example.com/recipe', 'https://imgur.com/pasta.jpg');
 ```
 
 ### 👤 User 資料表
+
+#### 基本欄位
 
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
@@ -116,36 +131,51 @@ VALUES ('羅宋湯', '番茄,馬鈴薯', '半顆的洋蔥切丁、紅蘿蔔、�
 | User_State | VARCHAR(20) | 是 | 使用者目前狀態 | 任意狀態描述文字 | none |
 | user_dislike | TEXT | 是 | 使用者不喜歡的食材 | 以逗號分隔的食材名稱 | 洋蔥,青椒 |
 
+#### 完整性限制說明
+
+| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
+|---------|-------------|-----------------|
+| LINE_ID | 必須為LINE提供的有效使用者識別碼，長度固定，且不可為空 | CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$') |
+| User_State | 可為空，若不為空則長度不得超過20個字元 | CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20) |
+| user_dislike | 可為空，若不為空則必須以逗號分隔各個食材名稱 | 無需額外限制 |
+
 ```sql
 CREATE TABLE User (
     LINE_ID VARCHAR(50) PRIMARY KEY,
     User_State VARCHAR(20),
-    user_dislike TEXT
+    user_dislike TEXT,
+    CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$'),
+    CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20)
 );
-
--- 範例資料
-INSERT INTO User (LINE_ID, User_State, user_dislike)
-VALUES ('U49bbc79ed892a8b8357a3699327850da', 'none', '洋蔥,青椒');
 ```
 
 ### 🥬 Ingredient 資料表
+
+#### 基本欄位
 
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
 | Ingredient_ID | INT | 否 | 食材編號（主鍵） | 唯一 | 1 |
 | Ingredient_Name | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 番茄 |
 
+#### 完整性限制說明
+
+| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
+|---------|-------------|-----------------|
+| Ingredient_ID | 必須為大於 0 的整數，且不可為空，作為主鍵需保證唯一性 | 使用 AUTO_INCREMENT 確保遞增且唯一 |
+| Ingredient_Name | 必須為長度 1 到 50 個字元的文字，且不可為空，同一食材名稱不得重複 | CHECK (CHAR_LENGTH(Ingredient_Name) BETWEEN 1 AND 50) |
+
 ```sql
 CREATE TABLE Ingredient (
     Ingredient_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Ingredient_Name VARCHAR(50) NOT NULL
+    Ingredient_Name VARCHAR(50) NOT NULL UNIQUE,
+    CHECK (CHAR_LENGTH(Ingredient_Name) BETWEEN 1 AND 50)
 );
-
--- 範例資料
-INSERT INTO Ingredient (Ingredient_Name) VALUES ('番茄');
 ```
 
 ### 🥣 User_Ingredients 資料表
+
+#### 基本欄位
 
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
@@ -153,21 +183,28 @@ INSERT INTO Ingredient (Ingredient_Name) VALUES ('番茄');
 | Ingredients | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 馬鈴薯 |
 | Quantity | VARCHAR(20) | 是 | 食材數量 | > 0 的整數 | 2 |
 
+#### 完整性限制說明
+
+| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
+|---------|-------------|-----------------|
+| LINE_ID | 必須存在於 User 表中的 LINE_ID，且不可為空 | FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID) |
+| Ingredients | 必須為長度 1 到 50 個字元的文字，且不可為空 | CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50) |
+| Quantity | 可為空，若不為空則必須為正整數 | CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0) |
+
 ```sql
 CREATE TABLE User_Ingredients (
     LINE_ID VARCHAR(50) NOT NULL,
     Ingredients VARCHAR(50) NOT NULL,
     Quantity VARCHAR(20),
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
-    CHECK (CAST(Quantity AS SIGNED) > 0 OR Quantity IS NULL)
+    CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50),
+    CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0)
 );
-
--- 範例資料
-INSERT INTO User_Ingredients (LINE_ID, Ingredients, Quantity)
-VALUES ('U49bbc79ed892a8b8357a3699327850da', '馬鈴薯', '2');
 ```
 
 ### ⭐ Favorite_recipes 資料表
+
+#### 基本欄位
 
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
@@ -176,37 +213,36 @@ VALUES ('U49bbc79ed892a8b8357a3699327850da', '馬鈴薯', '2');
 | Favorite_time | DATETIME | 否 | 加入最愛的時間 | 格式：YYYY-MM-DD HH:MM:SS | 2025-06-05 15:00:00 |
 | Note | TEXT | 是 | 備註說明 | 任意文字 |  |
 
+#### 完整性限制說明
+
+| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
+|---------|-------------|-----------------|
+| LINE_ID | 必須存在於 User 表中的 LINE_ID，且不可為空 | FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID) |
+| Recipe_ID | 必須存在於 Recipe 表中的 Recipe_ID，且不可為空 | FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID) |
+| Favorite_time | 必須為有效的日期時間格式，且不可為空 | 無需額外限制（MySQL內建驗證） |
+| Note | 可為空，若不為空則可包含任意文字 | 無需額外限制 |
+
 ```sql
 CREATE TABLE Favorite_recipes (
     LINE_ID VARCHAR(50) NOT NULL,
     Recipe_ID INT NOT NULL,
-    Favorite_time DATETIME NOT NULL,
+    Favorite_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Note TEXT,
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
     FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID),
     PRIMARY KEY (LINE_ID, Recipe_ID)
 );
-
--- 範例資料
-INSERT INTO Favorite_recipes (LINE_ID, Recipe_ID, Favorite_time)
-VALUES ('U49bbc79ed892a8b8357a3699327850da', 101, '2025-06-05 15:00:00');
 ```
-
-## 資料庫關聯圖
-
-使用者（User）可以:
-1. 擁有多個喜愛的食譜（Favorite_recipes）
-2. 擁有多個食材（User_Ingredients）
-3. 每個食譜（Recipe）可以被多個使用者收藏
-4. 每個食材（Ingredient）可以被多個使用者擁有
 
 ## 注意事項
 
-1. 所有的 LINE_ID 都需要參照 User 表的 LINE_ID
-2. Recipe_ID 需要參照 Recipe 表的 Recipe_ID
-3. 日期時間格式統一使用 YYYY-MM-DD HH:MM:SS
-4. 食材數量必須為正整數
-5. URL 需要是合法的網址格式
+1. 所有外鍵關聯應設定適當的 ON DELETE 和 ON UPDATE 行為
+2. 考慮在適當的欄位上建立索引以提升查詢效能
+3. 日期時間相關欄位建議使用 DEFAULT CURRENT_TIMESTAMP
+4. 文字欄位長度限制需考慮實際使用情況
+5. URL 欄位的正規表達式驗證可能需要根據實際需求調整
+6. 數值欄位的範圍限制需配合業務邏輯設定
+
 ---
 
 
