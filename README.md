@@ -30,6 +30,8 @@
 #### 3. 不熟悉食材或廚藝技巧
 有些人可能對某些食材不熟悉，或者不知道該如何烹調。透過系統的食譜推薦與詳細的製作步驟，使用者可以學習如何使用不同的食材來烹飪出美味的餐點。
 
+###  使用案例
+
 ![使用案例圖](https://github.com/user-attachments/assets/d2d7bfe0-fff6-4fc1-b585-3ca5a731ba84)
 
 ![使用案例圖](https://github.com/user-attachments/assets/f21126c9-21eb-4390-bab3-4693852f7022)
