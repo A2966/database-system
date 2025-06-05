@@ -142,39 +142,43 @@
 
 ### 資料表結構
 
-#### 1. Recipe (食譜資料表)
+#### 1. User (使用者資料表)
 | 欄位名稱 | 說明 |
 |----------|------|
-| Recipe_ID | 食譜ID |
-| Recipe_Name | 食譜名稱 |
-| Ingredient | 食譜所需食材 |
-| Instructions | 步驟 |
-| Recipe_photo_url | 食譜照片 |
-
-#### 2. User (使用者資料表)
-| 欄位名稱 | 說明 |
-|----------|------|
-| User_ID | 使用者ID |
-| LINE_ID | LINE ID |
+| LINE_ID | 使用者LINE的ID |
 | User_State | 使用者狀態 |
-| Change_id | 使用者欲更改食材 |
-| User_Last_Ingredients | 使用者上一次輸入食材 |
-| User_Last_recipes | 使用者上一次推薦食譜 |
+| User_dislike | 使用者不喜歡的食材 |
 
-#### 3. User_Ingredients (使用者持有食材資料表)
+#### 2. User_Ingredients (使用者食材資料表)
 | 欄位名稱 | 說明 |
 |----------|------|
-| User_Ingredients_ID | 使用者食材ID |
-| LINE_ID | LINE ID |
-| Database_Ingredients | 持有食材名稱 |
-| Quantity | 數量 |
+| User_ID | 使用者LINE的ID |
+| Ingredients | 食材名稱 |
+| Quantity | 食材數量 |
 
-#### 4. Recipe_recommend (食譜推薦結果資料表)
+#### 3. Favorite_Ingredients (使用者喜愛食譜資料表)
 | 欄位名稱 | 說明 |
 |----------|------|
-| User_ID | 使用者ID |
-| User_Ingredients_ID | 使用者食材ID |
-| Recipe_ID | 食譜ID |
+| LINE_ID | 使用者LINE的ID |
+| Recipe_ID | 食譜的ID |
+| Favorite_time | 新增喜愛的時間 |
+| Note | 使用者備註 |
+
+#### 4. Recipe (食譜推資料表)
+| 欄位名稱 | 說明 |
+|----------|------|
+| Recipe_ID | 食譜的編號 |
+| Recipe_Name | 食譜的名稱 |
+| Recipe_photo_url | 食譜照片的網址 |
+| Recipe_url | 食譜的網址 |
+| Ingredient | 食譜中的食材 |
+
+#### 5.Ingredient (食材資料表)
+| 欄位名稱 | 說明 |
+|----------|------|
+| Ingredient_Name | 食材的名稱 |
+| Ingredient_ID | 食材的編號 |
+
 
 ## 詳細說明
 
