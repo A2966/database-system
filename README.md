@@ -137,7 +137,8 @@
 
 
 ### ER Diagram
-![ER](https://github.com/user-attachments/assets/163fd506-6375-4f2d-b36c-e1636be39010)
+![Chenerdiagram1](https://github.com/user-attachments/assets/3e717033-d061-4bb0-88fe-160e0db90727)
+
 
 
 ### 資料表結構
