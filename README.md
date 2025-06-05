@@ -415,6 +415,9 @@ INSERT INTO User_Ingredients (LINE_ID, Database_Ingredients, Quantity) VALUES
     2
 );
 ```
+### 資料來源
+- 食譜資料來源(我們有經過同意使用此網站的食譜資料):[https://icook.tw/](https://icook.tw/)
+- ![許可圖片](https://github.com/user-attachments/assets/05c4b26c-286f-44d9-a19b-cd9603e94158)
 
 
 
