@@ -308,7 +308,7 @@ VALUES (
 | Ingredients | 食材名稱 |
 | Quantity | 食材數量 |
 
-#### 3. Favorite_Ingredients (使用者喜愛食譜資料表)
+#### 3. Favorite_recipes (使用者喜愛食譜資料表)
 | 欄位名稱 | 說明 |
 |----------|------|
 | LINE_ID | 使用者LINE的ID |
