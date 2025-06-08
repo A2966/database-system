@@ -118,7 +118,7 @@ CREATE TABLE Recipe (
     CHECK (CHAR_LENGTH(Ingredient) > 0),
     CHECK (Recipe_url IS NULL OR Recipe_url REGEXP '^https?://[A-Za-z0-9\\-\\._~:/\\?#\\[\\]@!\\$&\'\\(\\)\\*\\+,;=]+$'),
     CHECK (Recipe_photo_url IS NULL OR Recipe_photo_url REGEXP '^https?://.*\\.(jpg|jpeg|png|gif)$')
-);
+) ENGINE=InnoDB;
 ```
 
 ### 👤 User 資料表
@@ -146,7 +146,7 @@ CREATE TABLE User (
     user_dislike TEXT,
     CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$'),
     CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20)
-);
+) ENGINE=InnoDB;
 ```
 
 ### 🥬 Ingredient 資料表
@@ -231,7 +231,7 @@ CREATE TABLE Favorite_recipes (
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
     FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID),
     PRIMARY KEY (LINE_ID, Recipe_ID)
-);
+) ENGINE=InnoDB;
 ```
 
 ## 注意事項
