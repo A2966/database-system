@@ -394,40 +394,7 @@ WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ![image](https://github.com/user-attachments/assets/0f9046f5-d978-4166-9962-2f58bccd1692)
 
 
-### 3. 查看所有食譜與使用食材的對應
-```sql
-CREATE VIEW View_Recipe_Ingredients AS
-SELECT 
-    Recipe_ID,
-    Recipe_Name,
-    Ingredient
-FROM Recipe;
-```
-### 4. 使用者完整資訊總覽
-```sql
-CREATE VIEW View_User_Profile AS
-SELECT 
-    u.LINE_ID,
-    u.User_State,
-    u.user_dislike,
-    ui.Ingredients,
-    ui.Quantity
-FROM User u
-LEFT JOIN User_Ingredients ui ON u.LINE_ID = ui.LINE_ID;
-```
-### 5. 食材清單對照
-```sql
-CREATE VIEW View_Ingredient_Validation AS
-SELECT 
-    DISTINCT ui.Ingredients AS Used_Ingredient,
-    i.Ingredient_Name AS Registered_Ingredient,
-    CASE 
-        WHEN i.Ingredient_Name IS NOT NULL THEN 'Valid'
-        ELSE 'Unregistered'
-    END AS Status
-FROM User_Ingredients ui
-LEFT JOIN Ingredient i ON ui.Ingredients = i.Ingredient_Name;
-```
+
 
 ## 詳細說明
 
