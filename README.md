@@ -354,7 +354,7 @@ JOIN Recipe r ON f.Recipe_ID = r.Recipe_ID;
 ```sql
 SELECT *
 FROM View_User_Favorites
-WHERE LINE_ID = 'Uxxxxxxxxxx';
+WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ```
 ### 說明
 - 此功能可查詢使用者（以 LINE_ID 識別）所收藏的食譜資訊，包含：
@@ -383,7 +383,7 @@ JOIN User_Ingredients ui ON u.LINE_ID = ui.LINE_ID;
 -- 查詢指定 LINE_ID 使用者目前的所有食材庫存
 SELECT *
 FROM View_User_Ingredients
-WHERE LINE_ID = 'Uxxxxxxxxxx';
+WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ```
 ### 說明
 - 此功能可查詢使用者當前持有的所有食材及其數量，有助於比對最愛食譜所需食材與現有食材
@@ -391,6 +391,8 @@ WHERE LINE_ID = 'Uxxxxxxxxxx';
   - 結合 User 與 User_Ingredients 表，透過 JOIN 將使用者的 LINE_ID 與食材名稱、數量做結合。
  
 ### 執行結果
+![image](https://github.com/user-attachments/assets/0f9046f5-d978-4166-9962-2f58bccd1692)
+
 
 ### 3. 查看所有食譜與使用食材的對應
 ```sql
