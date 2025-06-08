@@ -5,6 +5,7 @@
 - [應用情境與使用案例](#應用情境與使用案例)
 - [系統架構](#系統架構)
 - [資料庫結構](#資料庫結構)
+- [View](#View)
 - [詳細說明](#詳細說明)
 - [資料庫Schema](#資料庫Schema)
 
@@ -328,6 +329,42 @@ VALUES (
 | Ingredient_Name | 食材的名稱 |
 | Ingredient_ID | 食材的編號 |
 
+## View
+
+### 1. 查看使用者的最愛食譜詳細資訊
+```sql
+CREATE VIEW View_User_Favorites AS
+SELECT 
+    u.LINE_ID,
+    r.Recipe_ID,
+    r.Recipe_Name,
+    r.Ingredient,
+    r.Instructions,
+    r.Recipe_url,
+    r.Recipe_photo_url,
+    f.Favorite_time,
+    f.Note
+FROM Favorite_recipes f
+JOIN User u ON f.LINE_ID = u.LINE_ID
+JOIN Recipe r ON f.Recipe_ID = r.Recipe_ID;
+);
+```
+### 使用方式
+```sql
+SELECT *
+FROM View_User_Favorites
+WHERE LINE_ID = 'Uxxxxxxxxxx';
+```
+### 說明
+- 此功能可查詢使用者（以 LINE_ID 識別）所收藏的食譜資訊，包含：
+  - 食譜編號與名稱
+  - 所需食材與步驟說明
+  - 食譜來源連結與圖片
+  - 收藏時間與個人備註等
+- 詳情
+  - 結合 User、Favorite_recipes 以及 Recipe 三個資料表，透過 JOIN 取得完整的收藏紀錄與食譜內容，並儲存至 View 中供快速查詢使用。  
+ 
+### 執行結果
 
 ## 詳細說明
 
