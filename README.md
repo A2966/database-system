@@ -119,6 +119,17 @@ CREATE TABLE Recipe (
     CHECK (Recipe_url IS NULL OR Recipe_url REGEXP '^https?://[A-Za-z0-9\\-\\._~:/\\?#\\[\\]@!\\$&\'\\(\\)\\*\\+,;=]+$'),
     CHECK (Recipe_photo_url IS NULL OR Recipe_photo_url REGEXP '^https?://.*\\.(jpg|jpeg|png|gif)$')
 ) ENGINE=InnoDB;
+
+
+-- 範例：插入一筆食譜資料到 Recipe 表
+INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_url, Recipe_photo_url)
+VALUES (
+    '簡單炒蛋',                                      -- Recipe_Name：食譜名稱
+    '雞蛋, 鹽, 油',                                  -- Ingredient：食材列表
+    '將雞蛋打散，加鹽後下油鍋翻炒至熟。',              -- Instructions：料理步驟說明
+    'https://example.com/recipe/eggs',               -- Recipe_url：食譜詳細說明網頁連結（可選）
+    'https://example.com/images/eggs.jpg'            -- Recipe_photo_url：食譜圖片連結（可選，限圖片格式）
+);
 ```
 
 ### 👤 User 資料表
@@ -147,6 +158,15 @@ CREATE TABLE User (
     CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$'),
     CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20)
 ) ENGINE=InnoDB;
+
+
+--  範例：插入一位使用者到 User 表
+INSERT INTO User (LINE_ID, User_State, user_dislike)
+VALUES (
+    'U1234567890abcdef1234567890abcdef',             -- LINE_ID：使用者LINE唯一ID，固定格式U開頭+32位小寫十六進位
+    '選擇食材中',                                     -- User_State：目前使用者狀態（可為 NULL）
+    '不喜香菜、不吃牛肉'                              -- user_dislike：使用者忌口內容（例如過敏、討厭食物）
+);
 ```
 
 ### 🥬 Ingredient 資料表
@@ -170,6 +190,13 @@ CREATE TABLE Ingredient (
     Ingredient_ID INT PRIMARY KEY AUTO_INCREMENT,
     Ingredient_Name VARCHAR(50) NOT NULL UNIQUE,
     CHECK (CHAR_LENGTH(Ingredient_Name) BETWEEN 1 AND 50)
+);
+
+
+-- 範例：插入一筆食材資料到 Ingredient 表
+INSERT INTO Ingredient (Ingredient_Name)
+VALUES (
+    '雞蛋'                                            -- Ingredient_Name：單一個食材名稱（唯一）
 );
 ```
 
@@ -199,6 +226,15 @@ CREATE TABLE User_Ingredients (
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
     CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50),
     CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0)
+);
+
+
+-- 範例：插入一筆使用者食材資料到 User_Ingredients 表
+INSERT INTO User_Ingredients (LINE_ID, Ingredients, Quantity)
+VALUES (
+    'U1234567890abcdef1234567890abcdef',             -- LINE_ID：關聯 User 表的使用者ID
+    '雞蛋',                                           -- Ingredients：該使用者擁有的食材名稱
+    '2'                                               -- Quantity：數量（需為正整數或可為 NULL）
 );
 ```
 
@@ -232,16 +268,17 @@ CREATE TABLE Favorite_recipes (
     FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID),
     PRIMARY KEY (LINE_ID, Recipe_ID)
 ) ENGINE=InnoDB;
+
+
+-- 範例：插入一筆使用者收藏的食譜資料到 Favorite_recipes 表
+INSERT INTO Favorite_recipes (LINE_ID, Recipe_ID, Note)
+VALUES (
+    'U1234567890abcdef1234567890abcdef',             -- LINE_ID：關聯 User 表的使用者ID
+    1,                                                -- Recipe_ID：關聯 Recipe 表的食譜ID
+    '這個炒蛋真的很好吃，下次加蔥花試試'               -- Note：使用者給這道菜的筆記（可為 NULL）
+);
 ```
 
-## 注意事項
-
-1. 所有外鍵關聯應設定適當的 ON DELETE 和 ON UPDATE 行為
-2. 考慮在適當的欄位上建立索引以提升查詢效能
-3. 日期時間相關欄位建議使用 DEFAULT CURRENT_TIMESTAMP
-4. 文字欄位長度限制需考慮實際使用情況
-5. URL 欄位的正規表達式驗證可能需要根據實際需求調整
-6. 數值欄位的範圍限制需配合業務邏輯設定
 
 ---
 
