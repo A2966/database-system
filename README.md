@@ -35,7 +35,7 @@
 
 ![使用案例圖](https://github.com/user-attachments/assets/fadfac63-4f0d-4336-acd9-d179ea0bdf11)
 
-![使用案例圖](https://github.com/user-attachments/assets/50afe80d-49e3-48f2-8fdb-cdd164feaf7d)
+![使用案例圖](https://github.com/user-attachments/assets/00b1ba91-4c1b-4a1f-a8e3-e95101446aa7)
 
 ![使用案例圖](https://github.com/user-attachments/assets/93fe2b90-f2a1-4f9c-9f5f-845aa593d8dd)
 
@@ -366,6 +366,65 @@ WHERE LINE_ID = 'Uxxxxxxxxxx';
   - 結合 User、Favorite_recipes 以及 Recipe 三個資料表，透過 JOIN 取得完整的收藏紀錄與食譜內容，並儲存至 View 中供快速查詢使用。  
  
 ### 執行結果
+
+### 2. 查看使用者持有的所有食材與數量
+```sql
+CREATE VIEW View_User_Ingredients AS
+SELECT 
+    u.LINE_ID,
+    ui.Ingredients AS Ingredient_Name,
+    ui.Quantity
+FROM User u
+JOIN User_Ingredients ui ON u.LINE_ID = ui.LINE_ID;
+```
+### 使用方式
+```sql
+-- 查詢指定 LINE_ID 使用者目前的所有食材庫存
+SELECT *
+FROM View_User_Ingredients
+WHERE LINE_ID = 'Uxxxxxxxxxx';
+```
+### 說明
+- 此功能可查詢使用者當前持有的所有食材及其數量，有助於比對最愛食譜所需食材與現有食材
+- 詳情
+  - 結合 User 與 User_Ingredients 表，透過 JOIN 將使用者的 LINE_ID 與食材名稱、數量做結合。
+ 
+### 執行結果
+
+### 3. 查看所有食譜與使用食材的對應
+```sql
+CREATE VIEW View_Recipe_Ingredients AS
+SELECT 
+    Recipe_ID,
+    Recipe_Name,
+    Ingredient
+FROM Recipe;
+```
+### 4. 使用者完整資訊總覽
+```sql
+CREATE VIEW View_User_Profile AS
+SELECT 
+    u.LINE_ID,
+    u.User_State,
+    u.user_dislike,
+    ui.Ingredients,
+    ui.Quantity
+FROM User u
+LEFT JOIN User_Ingredients ui ON u.LINE_ID = ui.LINE_ID;
+```
+### 5. 食材清單對照
+```sql
+CREATE VIEW View_Ingredient_Validation AS
+SELECT 
+    DISTINCT ui.Ingredients AS Used_Ingredient,
+    i.Ingredient_Name AS Registered_Ingredient,
+    CASE 
+        WHEN i.Ingredient_Name IS NOT NULL THEN 'Valid'
+        ELSE 'Unregistered'
+    END AS Status
+FROM User_Ingredients ui
+LEFT JOIN Ingredient i ON ui.Ingredients = i.Ingredient_Name;
+```
 
 ## 詳細說明
 
