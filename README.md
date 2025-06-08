@@ -124,7 +124,7 @@ CREATE TABLE Recipe (
 -- 範例：插入一筆食譜資料到 Recipe 表
 INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_url, Recipe_photo_url)
 VALUES (
-    '簡單炒蛋',                                      -- Recipe_Name：食譜名稱
+    '炒蛋',                                      -- Recipe_Name：食譜名稱
     '雞蛋, 鹽, 油',                                  -- Ingredient：食材列表
     '將雞蛋打散，加鹽後下油鍋翻炒至熟。',              -- Instructions：料理步驟說明
     'https://example.com/recipe/eggs',               -- Recipe_url：食譜詳細說明網頁連結（可選）
