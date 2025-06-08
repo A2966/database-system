@@ -347,7 +347,6 @@ SELECT
 FROM Favorite_recipes f
 JOIN User u ON f.LINE_ID = u.LINE_ID
 JOIN Recipe r ON f.Recipe_ID = r.Recipe_ID;
-);
 ```
 ### 使用方式
 ```sql
