@@ -366,6 +366,7 @@ WHERE LINE_ID = 'Uxxxxxxxxxx';
   - 結合 User、Favorite_recipes 以及 Recipe 三個資料表，透過 JOIN 取得完整的收藏紀錄與食譜內容，並儲存至 View 中供快速查詢使用。  
  
 ### 執行結果
+![image](https://github.com/user-attachments/assets/838356e5-619f-402b-a16e-d9746e102a99)
 
 ### 2. 查看使用者持有的所有食材與數量
 ```sql
