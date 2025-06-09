@@ -143,7 +143,7 @@ VALUES (
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
 | LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 唯一值，主鍵 | U49bbc79ed892a8b8357a3699327850da |
-| User_State | VARCHAR(20) | 否 | 使用者目前狀態 | None、change1、change2 | none |
+| User_State | VARCHAR(20) | 否 | 使用者目前狀態 | None、change1、change2 | None |
 | user_dislike | TEXT | 是 | 使用者不喜歡的食材 | 以逗號分隔的食材名稱 | 洋蔥,青椒 |
 
 #### 完整性限制說明
@@ -183,7 +183,7 @@ VALUES (
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
 | Ingredient_ID | INT | 否 | 食材編號（主鍵） | 唯一 | 1 |
-| Ingredient_Name | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 番茄 |
+| Ingredient_Name | VARCHAR(50) | 否 | 長度1~50的文字 | 任意食材名稱 | 番茄 |
 
 #### 完整性限制說明
 
@@ -293,7 +293,8 @@ VALUES (
 
 
 ### ER_Diagram
-![Chenerdiagram1](https://github.com/user-attachments/assets/3e717033-d061-4bb0-88fe-160e0db90727)
+![ER_Diagram](https://github.com/user-attachments/assets/92de7e83-4cb2-4f13-9d95-d5840ac1011d)
+
 
 
 
