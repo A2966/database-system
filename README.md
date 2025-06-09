@@ -211,11 +211,12 @@ VALUES (
 
 #### 基本欄位
 
-| 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
-|---------|----------|------------|----------|------------|-------------|
-| LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 參照 User.LINE_ID | U49bbc79ed892a8b8357a3699327850da |
-| Ingredients | VARCHAR(50) | 否 | 食材名稱 | 任意食材名稱 | 馬鈴薯 |
-| Quantity | VARCHAR(20) | 是 | 食材數量 | > 0 的整數 | 2 |
+| 欄位名稱           | 資料型態        | 是否可為空 | 欄位說明          | 值域/限制                         | 實際資料舉例                            |
+| -------------- | ----------- | ----- | ------------- | ----------------------------- | --------------------------------- |
+| LINE\_ID       | VARCHAR(50) | 否     | 使用者的 LINE 識別碼 | 參照 `User.LINE_ID`             | U49bbc79ed892a8b8357a3699327850da |
+| Ingredient\_ID | INT         | 否     | 食材的識別編號       | 參照 `Ingredient.Ingredient_ID` | 5                                 |
+| Quantity       | INT | 是     | 食材數量          | 為空或為大於 0 的整數         | 2                                 |
+
 
 #### 完整性限制說明
 
@@ -224,6 +225,12 @@ VALUES (
 | LINE_ID | 必須存在於 User 表中的 LINE_ID，且不可為空 | FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID) |
 | Ingredients | 必須為長度 1 到 50 個字元的文字，且不可為空 | CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50) |
 | Quantity | 可為空，若不為空則必須為正整數 | CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0) |
+| 欄位名稱           | 值域限制說明                                       | 確認方式（MySQL）                                                        |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------ |
+| LINE\_ID       | 必須存在於 `User` 表中的 `LINE_ID`，且不可為空             | `FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID)`                   |
+| Ingredient\_ID | 必須存在於 `Ingredient` 表中的 `Ingredient_ID`，且不可為空 | `FOREIGN KEY (Ingredient_ID) REFERENCES Ingredient(Ingredient_ID)` |
+| Quantity       | 可為空，若不為空則必須為正整數                              | `CHECK (Quantity IS NULL OR Quantity > 0)`         |
+
 
 ```sql
 CREATE TABLE User_Ingredients (
@@ -242,7 +249,7 @@ INSERT INTO User_Ingredients (LINE_ID, Ingredient_ID, Quantity)
 VALUES (
     'U1234567890abcdef1234567890abcdef',
     (SELECT Ingredient_ID FROM Ingredient WHERE Ingredient_Name = '雞蛋'),
-    '2'
+    2
 );
 ```
 
