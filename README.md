@@ -143,7 +143,7 @@ VALUES (
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
 | LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 唯一值，主鍵 | U49bbc79ed892a8b8357a3699327850da |
-| User_State | VARCHAR(20) | 是 | 使用者目前狀態 | 任意狀態描述文字 | none |
+| User_State | VARCHAR(20) | 否 | 使用者目前狀態 | None、change1、change2 | none |
 | user_dislike | TEXT | 是 | 使用者不喜歡的食材 | 以逗號分隔的食材名稱 | 洋蔥,青椒 |
 
 #### 完整性限制說明
@@ -151,13 +151,16 @@ VALUES (
 | 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
 |---------|-------------|-----------------|
 | LINE_ID | 必須為LINE提供的有效使用者識別碼，長度固定，且不可為空 | CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$') |
-| User_State | 可為空，若不為空則長度不得超過20個字元 | CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20) |
+| User_State | 不可為空，且只能出現 None、change1、change2文字 | CHECK (User_State IS NULL   OR User_State IN ('None', 'change1', 'change2') ) |
 | user_dislike | 可為空，若不為空則必須以逗號分隔各個食材名稱 | 無需額外限制 |
 
 ```sql
 CREATE TABLE User (
     LINE_ID VARCHAR(50) PRIMARY KEY,
-    User_State VARCHAR(20),
+    CHECK (
+    User_State IS NULL 
+    OR User_State IN ('None', 'change1', 'change2')
+    ),
     user_dislike TEXT,
     CHECK (LINE_ID REGEXP '^U[a-f0-9]{32}$'),
     CHECK (User_State IS NULL OR CHAR_LENGTH(User_State) <= 20)
