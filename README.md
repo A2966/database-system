@@ -258,7 +258,7 @@ VALUES (
 | LINE_ID | VARCHAR(50) | 否 | 使用者的 LINE 識別碼 | 參照 User.LINE_ID | U49bbc79ed892a8b8357a3699327850da |
 | Recipe_ID | INT | 否 | 食譜編號 | 參照 Recipe.Recipe_ID | 101 |
 | Favorite_time | DATETIME | 否 | 加入最愛的時間 | 格式：YYYY-MM-DD HH:MM:SS | 2025-06-05 15:00:00 |
-| Note | TEXT | 是 | 備註說明 | 任意文字 |  |
+| Note | TEXT | 是 | 備註說明 | 任意文字 | 小孩愛吃|
 
 #### 完整性限制說明
 
