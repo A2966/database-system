@@ -228,20 +228,21 @@ VALUES (
 ```sql
 CREATE TABLE User_Ingredients (
     LINE_ID VARCHAR(50) NOT NULL,
-    Ingredients VARCHAR(50) NOT NULL,
+    Ingredient_ID INT NOT NULL,
     Quantity VARCHAR(20),
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
-    CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50),
-    CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0)
+    FOREIGN KEY (Ingredient_ID) REFERENCES Ingredient(Ingredient_ID),
+    CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0),
+    PRIMARY KEY (LINE_ID, Ingredient_ID)
 );
 
 
 -- 範例：插入一筆使用者食材資料到 User_Ingredients 表
-INSERT INTO User_Ingredients (LINE_ID, Ingredients, Quantity)
+INSERT INTO User_Ingredients (LINE_ID, Ingredient_ID, Quantity)
 VALUES (
-    'U1234567890abcdef1234567890abcdef',             -- LINE_ID：關聯 User 表的使用者ID
-    '雞蛋',                                           -- Ingredients：該使用者擁有的食材名稱
-    '2'                                               -- Quantity：數量（需為正整數或可為 NULL）
+    'U1234567890abcdef1234567890abcdef',
+    (SELECT Ingredient_ID FROM Ingredient WHERE Ingredient_Name = '雞蛋'),
+    '2'
 );
 ```
 
@@ -280,9 +281,9 @@ CREATE TABLE Favorite_recipes (
 -- 範例：插入一筆使用者收藏的食譜資料到 Favorite_recipes 表
 INSERT INTO Favorite_recipes (LINE_ID, Recipe_ID, Note)
 VALUES (
-    'U1234567890abcdef1234567890abcdef',             -- LINE_ID：關聯 User 表的使用者ID
-    1,                                                -- Recipe_ID：關聯 Recipe 表的食譜ID
-    '這個炒蛋真的很好吃，下次加蔥花試試'               -- Note：使用者給這道菜的筆記（可為 NULL）
+    'U1234567890abcdef1234567890abcdef', 
+    1, 
+    '這個炒蛋真的很好吃，下次加蔥花試試'
 );
 ```
 
