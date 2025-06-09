@@ -370,9 +370,9 @@ VALUES (
 | favorite_recipes | SELECT, INSERT, UPDATE | 修改使用者收藏食譜 |
 ```sql
 CREATE USER 'user'@'%' IDENTIFIED BY '123';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user TO 'user'@'%';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user_ingredients TO 'user'@'%';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_recipes TO 'user'@'%';
+GRANT SELECT, INSERT, UPDATE ON Recipe_DB.user TO 'user'@'%';
+GRANT SELECT, INSERT, UPDATE ON Recipe_DB.user_ingredients TO 'user'@'%';
+GRANT SELECT, INSERT, UPDATE ON Recipe_DB.favorite_recipes TO 'user'@'%';
 FLUSH PRIVILEGES;
 ```
 ### 2.管理員
@@ -382,8 +382,8 @@ FLUSH PRIVILEGES;
 | ingredients | SELECT, INSERT, UPDATE,CREATE VIEW, DELETE | 管理食材資料表 |
 ```sql
 CREATE USER 'admin'@'%' IDENTIFIED BY '246';
-GRANT SELECT, INSERT, UPDATE, CREATE VIEW, DELETE ON ingredient_recognition_for_database.recipe TO 'admin'@'%';
-GRANT SELECT, INSERT, UPDATE,CREATE VIEW, DELETE ON ingredient_recognition_for_database.ingredients TO 'admin'@'%';
+GRANT SELECT, INSERT, UPDATE, CREATE VIEW, DELETE ON Recipe_DB.recipe TO 'admin'@'%';
+GRANT SELECT, INSERT, UPDATE,CREATE VIEW, DELETE ON Recipe_DB.ingredients TO 'admin'@'%';
 FLUSH PRIVILEGES;
 ```
 ### 3.資料庫管理員
@@ -396,7 +396,7 @@ FLUSH PRIVILEGES;
 | ingredients | ALL | 管理食材資料表 |
 ```sql
 CREATE USER 'DBadmin'@'%' IDENTIFIED BY '888';
-GRANT ALL PRIVILEGES ON ingredient_recognition_for_database.* TO 'DBadmin'@'%';
+GRANT ALL PRIVILEGES ON Recipe_DB.* TO 'DBadmin'@'%';
 FLUSH PRIVILEGES;
 ```
 
