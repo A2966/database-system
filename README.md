@@ -296,8 +296,7 @@ VALUES (
 
 
 ### ER_Diagram
-![ER_Diagram](https://github.com/user-attachments/assets/92de7e83-4cb2-4f13-9d95-d5840ac1011d)
-
+![ER_Diagram](https://github.com/user-attachments/assets/025c373d-5013-4ce7-8012-3a2428ebf0fc) 
 
 
 
