@@ -232,10 +232,10 @@ VALUES (
 CREATE TABLE User_Ingredients (
     LINE_ID VARCHAR(50) NOT NULL,
     Ingredient_ID INT NOT NULL,
-    Quantity VARCHAR(20),
+    QuantityINT,
     FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID),
     FOREIGN KEY (Ingredient_ID) REFERENCES Ingredient(Ingredient_ID),
-    CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0),
+    CHECK (Quantity IS NULL OR Quantity > 0),
     PRIMARY KEY (LINE_ID, Ingredient_ID)
 );
 
