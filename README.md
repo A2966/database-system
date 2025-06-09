@@ -391,7 +391,7 @@ FLUSH PRIVILEGES;
 | user | ALL | 管理使用者資料 |
 | user_ingredients | ALL | 管理使用者食材 |
 | favorite_recipes | ALL | 管理使用者收藏食譜 |
-| recipe | SELECT, INSERT, ALL | 管理食譜資料表 |
+| recipe | ALL | 管理食譜資料表 |
 | ingredients | ALL | 管理食材資料表 |
 ```sql
 CREATE USER 'DBadmin'@'%' IDENTIFIED BY '888';
