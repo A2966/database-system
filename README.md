@@ -220,11 +220,7 @@ VALUES (
 
 #### 完整性限制說明
 
-| 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
-|---------|-------------|-----------------|
-| LINE_ID | 必須存在於 User 表中的 LINE_ID，且不可為空 | FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID) |
-| Ingredients | 必須為長度 1 到 50 個字元的文字，且不可為空 | CHECK (CHAR_LENGTH(Ingredients) BETWEEN 1 AND 50) |
-| Quantity | 可為空，若不為空則必須為正整數 | CHECK (Quantity IS NULL OR CAST(Quantity AS SIGNED) > 0) |
+
 | 欄位名稱           | 值域限制說明                                       | 確認方式（MySQL）                                                        |
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------ |
 | LINE\_ID       | 必須存在於 `User` 表中的 `LINE_ID`，且不可為空             | `FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID)`                   |
