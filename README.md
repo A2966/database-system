@@ -9,7 +9,6 @@
 - [詳細說明](#詳細說明)
 - [使用者權限](#使用者權限)
 - [View](#View)
-- [資料庫Schema](#資料庫Schema)
 
 ## 組員資訊
 
@@ -427,10 +426,10 @@ WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ```
 ### 說明
 - 此功能可查詢使用者（以 LINE_ID 識別）所收藏的食譜資訊，包含：
-  - 食譜編號與名稱
-  - 所需食材與步驟說明
-  - 食譜來源連結與圖片
-  - 收藏時間與個人備註等
+  - 食譜編號與名稱。
+  - 所需食材與步驟說明。
+  - 食譜來源連結與圖片。
+  - 收藏時間與個人備註等。
 - 詳情
   - 結合 User、Favorite_recipes 以及 Recipe 三個資料表，透過 JOIN 取得完整的收藏紀錄與食譜內容，並儲存至 View 中供快速查詢使用。  
  
@@ -455,7 +454,7 @@ FROM View_User_Ingredients
 WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ```
 ### 說明
-- 此功能可查詢使用者當前持有的所有食材及其數量，有助於比對最愛食譜所需食材與現有食材
+- 此功能可查詢使用者當前持有的所有食材及其數量。
 - 詳情
   - 結合 User 與 User_Ingredients 表，透過 JOIN 將使用者的 LINE_ID 與食材名稱、數量做結合。
  
@@ -463,149 +462,6 @@ WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ![image](https://github.com/user-attachments/assets/0f9046f5-d978-4166-9962-2f58bccd1692)
 
 
-
-
-## 資料庫Schema
-
-### 📋 目錄
-- [資料表概覽](#資料表概覽)
-- [詳細資料表結構](#詳細資料表結構)
-  - [Recipe (食譜資料表)](#1-recipe-食譜資料表)
-  - [User (使用者資料表)](#2-user-使用者資料表)
-  - [User_Ingredients (使用者持有食材資料表)](#3-user_ingredients-使用者持有食材資料表)
-  - [Recipe_recommend (食譜推薦結果資料表)](#4-recipe_recommend-食譜推薦結果資料表)
-- [資料表範例](#資料表範例)
-
-### 資料表概覽
-本系統包含四個主要資料表，用於管理食譜推薦系統：
-- Recipe：儲存食譜基本資訊
-- User：管理使用者資料
-- User_Ingredients：追蹤使用者擁有的食材
-- Recipe_recommend：記錄推薦結果
-
-#### 詳細資料表結構
-
-#### 1. Recipe (食譜資料表)
-
-```sql
-CREATE TABLE Recipe (
-    Recipe_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Recipe_Name VARCHAR(100) NOT NULL,
-    Ingredient TEXT NOT NULL,
-    Instructions TEXT NOT NULL,
-    Recipe_photo_url VARCHAR(255)
-);
-```
-
-##### 欄位說明
-| 欄位名稱 | 資料型態 | 說明 | 備註 |
-|----------|----------|------|------|
-| Recipe_ID | INT | 食譜唯一識別碼 | 主鍵，自動遞增 |
-| Recipe_Name | VARCHAR(100) | 食譜名稱 | 不可為空 |
-| Ingredient | TEXT | 所需食材清單 | 不可為空 |
-| Instructions | TEXT | 烹飪步驟說明 | 不可為空 |
-| Recipe_photo_url | VARCHAR(255) | 食譜照片URL | 可為空 |
-
-#### 2. User (使用者資料表)
-
-```sql
-CREATE TABLE User (
-    User_ID INT PRIMARY KEY AUTO_INCREMENT,
-    LINE_ID VARCHAR(50) NOT NULL UNIQUE,
-    User_State VARCHAR(20) DEFAULT 'None',
-    Change_id INT,
-    User_Last_Ingredients TEXT,
-    User_Last_recipes TEXT
-);
-```
-
-##### 欄位說明
-| 欄位名稱 | 資料型態 | 說明 | 備註 |
-|----------|----------|------|------|
-| User_ID | INT | 使用者唯一識別碼 | 主鍵，自動遞增 |
-| LINE_ID | VARCHAR(50) | LINE平台使用者ID | 不可重複 |
-| User_State | VARCHAR(20) | 使用者狀態 | 預設值：'None' |
-| Change_id | INT | 欲更改食材ID | 可為空 |
-| User_Last_Ingredients | TEXT | 上次輸入食材 | 可為空 |
-| User_Last_recipes | TEXT | 上次推薦食譜 | 可為空 |
-
-#### 3. User_Ingredients (使用者持有食材資料表)
-
-```sql
-CREATE TABLE User_Ingredients (
-    User_Ingredients_ID INT PRIMARY KEY AUTO_INCREMENT,
-    LINE_ID VARCHAR(50) NOT NULL,
-    Database_Ingredients VARCHAR(100) NOT NULL,
-    Quantity INT DEFAULT 1,
-    FOREIGN KEY (LINE_ID) REFERENCES User(LINE_ID)
-);
-```
-
-##### 欄位說明
-| 欄位名稱 | 資料型態 | 說明 | 備註 |
-|----------|----------|------|------|
-| User_Ingredients_ID | INT | 食材記錄識別碼 | 主鍵，自動遞增 |
-| LINE_ID | VARCHAR(50) | 使用者LINE ID | 外鍵參照User表 |
-| Database_Ingredients | VARCHAR(100) | 食材名稱 | 不可為空 |
-| Quantity | INT | 數量 | 預設值：1 |
-
-#### 4. Recipe_recommend (食譜推薦結果資料表)
-
-```sql
-CREATE TABLE Recipe_recommend (
-    User_ID INT NOT NULL,
-    User_Ingredients_ID INT NOT NULL,
-    Recipe_ID INT NOT NULL,
-    PRIMARY KEY (User_ID, User_Ingredients_ID, Recipe_ID),
-    FOREIGN KEY (User_ID) REFERENCES User(User_ID),
-    FOREIGN KEY (User_Ingredients_ID) REFERENCES User_Ingredients(User_Ingredients_ID),
-    FOREIGN KEY (Recipe_ID) REFERENCES Recipe(Recipe_ID)
-);
-```
-
-##### 欄位說明
-| 欄位名稱 | 資料型態 | 說明 | 備註 |
-|----------|----------|------|------|
-| User_ID | INT | 使用者ID | 複合主鍵之一 |
-| User_Ingredients_ID | INT | 使用者食材ID | 複合主鍵之一 |
-| Recipe_ID | INT | 食譜ID | 複合主鍵之一 |
-
-### 資料表範例
-
-#### 1. Recipe (食譜資料表) 範例資料
-```sql
--- 新增食譜範例
-INSERT INTO Recipe (Recipe_Name, Ingredient, Instructions, Recipe_photo_url) VALUES
-(
-    '蔥花炒蛋',
-    '蔥,雞蛋,鹽,胡椒粉',
-    '1. 雞蛋打散加入適量鹽調味\n2. 蔥切段\n3. 熱油鍋\n4. 倒入蛋液\n5. 加入蔥花\n6. 翻炒均勻\n7. 最後撒上胡椒粉調味',
-    'https://example.com/recipes/egg-with-green-onion.jpg'
-);
-```
-
-#### 2. User (使用者資料表) 範例資料
-```sql
--- 新增使用者範例
-INSERT INTO User (LINE_ID, User_State, User_Last_Ingredients, User_Last_recipes) VALUES
-(
-    'Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx1',
-    'None',
-    '番茄,雞蛋',
-    '1,2'
-);
-```
-
-#### 3. User_Ingredients (使用者持有食材資料表) 範例資料
-```sql
--- 新增使用者食材範例
-INSERT INTO User_Ingredients (LINE_ID, Database_Ingredients, Quantity) VALUES
-(
-    'Uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx1',
-    '番茄',
-    2
-);
-```
 ### 資料來源
 - 食譜資料來源(我們有經過同意使用此網站的食譜資料):[https://icook.tw/](https://icook.tw/)
 - ![許可圖片](https://github.com/user-attachments/assets/05c4b26c-286f-44d9-a19b-cd9603e94158)
