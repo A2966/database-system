@@ -92,9 +92,9 @@
 | 欄位名稱 | 資料型態 | 是否可為空 | 欄位說明 | 值域/限制 | 實際資料舉例 |
 |---------|----------|------------|----------|------------|-------------|
 | Recipe_ID | INT | 否 | 食譜編號（主鍵） | 自動編號，唯一 | 101 |
-| Recipe_Name | VARCHAR(100) | 否 | 食譜名稱 | 任意名稱 | 羅宋湯 |
+| Recipe_Name | VARCHAR(100) | 否 | 食譜名稱 | 長度1~100的文字 | 羅宋湯 |
 | Ingredient | TEXT | 否 | 使用食材列表 | 以文字描述所需食材，以,分隔 | 番茄,馬鈴薯 |
-| Instructions | TEXT | 是 | 食譜步驟說明 | 任意文字 | 半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁... |
+| Instructions | TEXT | 是 | 食譜步驟說明 | 長度至少為 1的文字說明 | 半顆的洋蔥切丁、紅蘿蔔、馬玲薯切丁... |
 | Recipe_url | TEXT | 是 | 詳細食譜連結 | 合法 URL | https://example.com/recipe |
 | Recipe_photo_url | TEXT | 是 | 食譜圖片網址 | 合法圖片 URL | https://imgur.com/pasta.jpg |
 
@@ -103,9 +103,9 @@
 | 欄位名稱 | 值域限制說明 | 確認方式（MySQL） |
 |---------|-------------|-----------------|
 | Recipe_ID | 必須為大於 0 的整數，且不可為空，作為主鍵需保證唯一性 | 使用 AUTO_INCREMENT 確保遞增且唯一 |
-| Recipe_Name | 必須為長度 1 到 100 個字元的文字，不可為空 | CHECK (CHAR_LENGTH(Recipe_Name) BETWEEN 1 AND 100) |
+| Recipe_Name | 必須為 1 到 100 個字元長度的文字，可包含中英文、數字、空格及常見標點符號，且不可為空，用以顯示食譜的完整名稱。 | CHECK (CHAR_LENGTH(Recipe_Name) BETWEEN 1 AND 100) |
 | Ingredient | 必須包含至少一項食材，不可為空 | CHECK (CHAR_LENGTH(Ingredient) > 0) |
-| Instructions | 可為空，若不為空則必須包含文字說明 | 無需額外限制 |
+| Instructions | 至少為 1 字元長度的文字，可包含中英文、數字、空格及常見標點符號，且不可為空，用以顯示食譜的完整製作過程。 | CHECK (CHAR_LENGTH(Instructions) > 0 )|
 | Recipe_url | 可為空，若不為空則必須是合法的 URL 格式 | CHECK (Recipe_url IS NULL OR Recipe_url REGEXP '^https?://[A-Za-z0-9\\-\\._~:/\\?#\\[\\]@!\\$&\'\\(\\)\\*\\+,;=]+$') |
 | Recipe_photo_url | 可為空，若不為空則必須是合法的圖片 URL 格式 | CHECK (Recipe_photo_url IS NULL OR Recipe_photo_url REGEXP '^https?://.*\\.(jpg\|jpeg\|png\|gif)$') |
 
@@ -114,7 +114,7 @@ CREATE TABLE Recipe (
     Recipe_ID INT PRIMARY KEY AUTO_INCREMENT,
     Recipe_Name VARCHAR(100) NOT NULL,
     Ingredient TEXT NOT NULL,
-    Instructions TEXT,
+    Instructions TEXT NOT NULL,
     Recipe_url TEXT,
     Recipe_photo_url TEXT,
     CHECK (CHAR_LENGTH(Recipe_Name) BETWEEN 1 AND 100),
