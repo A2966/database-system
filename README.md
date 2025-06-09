@@ -362,6 +362,12 @@ VALUES (
 ## 使用者權限
 
 ### 1.使用者
+
+| 資料表 | 權限 | 說明 |
+|------|------|------|
+| user | SELECT, INSERT, UPDATE | 修改使用者資料 |
+| user_ingredients | SELECT, INSERT, UPDATE | 修改使用者食材 |
+| favorite_recipes | SELECT, INSERT, UPDATE | 修改使用者收藏食譜 |
 ```sql
 CREATE USER 'user'@'%' IDENTIFIED BY '123';
 GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user TO 'user'@'%';
@@ -370,6 +376,10 @@ GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_rec
 FLUSH PRIVILEGES;
 ```
 ### 2.管理員
+| 資料表 | 權限 | 說明 |
+|------|------|------|
+| recipe | SELECT, INSERT, UPDATE,CREATE VIEW | 管理食譜資料表 |
+| ingredients | SELECT, INSERT, UPDATE,CREATE VIEW | 管理食材資料表 |
 ```sql
 CREATE USER 'admin'@'%' IDENTIFIED BY '246';
 GRANT SELECT, INSERT, UPDATE,CREATE VIEW, ON ingredient_recognition_for_database.recipe TO 'admin'@'%';
@@ -377,6 +387,13 @@ GRANT SELECT, INSERT, UPDATE,CREATE VIEW ON ingredient_recognition_for_database.
 FLUSH PRIVILEGES;
 ```
 ### 3.資料庫管理員
+| 資料表 | 權限 | 說明 |
+|------|------|------|
+| user | ALL | 管理使用者資料 |
+| user_ingredients | ALL | 管理使用者食材 |
+| favorite_recipes | ALL | 管理使用者收藏食譜 |
+| recipe | SELECT, INSERT, ALL | 管理食譜資料表 |
+| ingredients | ALL | 管理食材資料表 |
 ```sql
 CREATE USER 'DBadmin'@'%' IDENTIFIED BY '888';
 GRANT ALL PRIVILEGES ON ingredient_recognition_for_database.* TO 'DBadmin'@'%';
