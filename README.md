@@ -288,7 +288,7 @@ VALUES (
 
 
 
-### ER Diagram
+### ER_Diagram
 ![Chenerdiagram1](https://github.com/user-attachments/assets/3e717033-d061-4bb0-88fe-160e0db90727)
 
 
