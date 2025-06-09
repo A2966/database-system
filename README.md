@@ -7,6 +7,7 @@
 - [資料庫結構與完整性限制](#資料庫結構與完整性限制)
 - [ER Diagram](#ER_Diagram)
 - [詳細說明](#詳細說明)
+- [使用者權限](#使用者權限)
 - [View](#View)
 - [資料庫Schema](#資料庫Schema)
 
@@ -366,6 +367,19 @@ CREATE USER 'user'@'%' IDENTIFIED BY '123';
 GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user TO 'user'@'%';
 GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user_ingredients TO 'user'@'%';
 GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_recipes TO 'user'@'%';
+FLUSH PRIVILEGES;
+```
+### 2.管理員
+```sql
+CREATE USER 'admin'@'%' IDENTIFIED BY '246';
+GRANT SELECT, INSERT, UPDATE,CREATE VIEW, ON ingredient_recognition_for_database.recipe TO 'admin'@'%';
+GRANT SELECT, INSERT, UPDATE,CREATE VIEW ON ingredient_recognition_for_database.ingredients TO 'admin'@'%';
+FLUSH PRIVILEGES;
+```
+### 3.資料庫管理員
+```sql
+CREATE USER 'DBadmin'@'%' IDENTIFIED BY '888';
+GRANT ALL PRIVILEGES ON ingredient_recognition_for_database.* TO 'DBadmin'@'%';
 FLUSH PRIVILEGES;
 ```
 
