@@ -378,12 +378,12 @@ FLUSH PRIVILEGES;
 ### 2.管理員
 | 資料表 | 權限 | 說明 |
 |------|------|------|
-| recipe | SELECT, INSERT, UPDATE,CREATE VIEW | 管理食譜資料表 |
-| ingredients | SELECT, INSERT, UPDATE,CREATE VIEW | 管理食材資料表 |
+| recipe | SELECT, INSERT, UPDATE,CREATE VIEW, DELETE | 管理食譜資料表 |
+| ingredients | SELECT, INSERT, UPDATE,CREATE VIEW, DELETE | 管理食材資料表 |
 ```sql
 CREATE USER 'admin'@'%' IDENTIFIED BY '246';
-GRANT SELECT, INSERT, UPDATE,CREATE VIEW, ON ingredient_recognition_for_database.recipe TO 'admin'@'%';
-GRANT SELECT, INSERT, UPDATE,CREATE VIEW ON ingredient_recognition_for_database.ingredients TO 'admin'@'%';
+GRANT SELECT, INSERT, UPDATE, CREATE VIEW, DELETE ON ingredient_recognition_for_database.recipe TO 'admin'@'%';
+GRANT SELECT, INSERT, UPDATE,CREATE VIEW, DELETE ON ingredient_recognition_for_database.ingredients TO 'admin'@'%';
 FLUSH PRIVILEGES;
 ```
 ### 3.資料庫管理員
