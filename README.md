@@ -358,6 +358,16 @@ VALUES (
 - 每個使用者食材必須對應到一個推薦結果
 
 ---
+## 使用者權限
+
+### 1.使用者
+```sql
+CREATE USER 'user5'@'%' IDENTIFIED BY '123';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user1 TO 'user5'@'%';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user_ingredients TO 'user5'@'%';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_recipes TO 'user5'@'%';
+FLUSH PRIVILEGES;
+```
 
 ## View
 
