@@ -362,10 +362,10 @@ VALUES (
 
 ### 1.使用者
 ```sql
-CREATE USER 'user5'@'%' IDENTIFIED BY '123';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user1 TO 'user5'@'%';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user_ingredients TO 'user5'@'%';
-GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_recipes TO 'user5'@'%';
+CREATE USER 'user'@'%' IDENTIFIED BY '123';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user TO 'user'@'%';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.user_ingredients TO 'user'@'%';
+GRANT SELECT, INSERT, UPDATE ON ingredient_recognition_for_database.favorite_recipes TO 'user'@'%';
 FLUSH PRIVILEGES;
 ```
 
