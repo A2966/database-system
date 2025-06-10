@@ -345,17 +345,16 @@ VALUES (
 
 ### 資料表關聯說明
 
-#### Recipe 與 Recipe_Recommend (1..n)
-- 一個推薦結果可以對應到多個食譜
-- 一個食譜只能對應到一個推薦結果
+#### User_Indgredients的外來鍵(FK)LINE_ID參照User的主鍵(PK)LINE_ID​
+- 一個User可以有多個使用者食材​
 
-#### User 與 Recipe_Recommend (1..n)
-- 一個推薦結果只會對應到一個使用者
-- 一個使用者可以有很多推薦結果
+#### Favorite_recipes的外來鍵(FK)LINE_ID參照User的主鍵(PK)LINE_ID​
+- 一個User可以有多個收藏食譜​
 
-#### User_Ingredients 與 Recipe_Recommend (1..n)
-- 一個推薦結果會對應到多個使用者食材
-- 每個使用者食材必須對應到一個推薦結果
+#### Favorite_recipes的外來鍵(FK)Recipe_ID參照Recipe的主鍵(PK)Recipe_ID​
+- 每個食譜可以被多個使用者收藏​
+#### User_Ingredient的外來鍵(FK)Ingredient_ID參照Ingredient的主鍵(PK)Ingredient_ID​ 
+使用者食材可以引用多個食材​ 
 
 ---
 ## 使用者權限
