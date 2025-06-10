@@ -363,11 +363,13 @@ VALUES (
 
 | 資料表 | 權限 | 說明 |
 |------|------|------|
+| reipce | SELECT | 查看食譜 | 
 | user | SELECT, INSERT, UPDATE | 修改使用者資料 |
 | user_ingredients | SELECT, INSERT, UPDATE | 修改使用者食材 |
 | favorite_recipes | SELECT, INSERT, UPDATE | 修改使用者收藏食譜 |
 ```sql
 CREATE USER 'user'@'%' IDENTIFIED BY '123';
+GRANT SELECT ON Recipe_DB.recipe TO 'user'@'%';
 GRANT SELECT, INSERT, UPDATE ON Recipe_DB.user TO 'user'@'%';
 GRANT SELECT, INSERT, UPDATE ON Recipe_DB.user_ingredients TO 'user'@'%';
 GRANT SELECT, INSERT, UPDATE ON Recipe_DB.favorite_recipes TO 'user'@'%';
