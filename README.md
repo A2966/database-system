@@ -1,6 +1,6 @@
 # 食譜查詢資料庫系統
 使用者輸入他所持有的食材，系統會依照使用者所提供的食材，進行最佳的食譜推薦。
-![簡報](https://onedrive.live.com/:p:/g/personal/DB935BC0A81B7C13/EWLmp6Q-fi5BvOTNX5oSqXAB1P4-Ss4yIJU_-2LI926XQg?resid=DB935BC0A81B7C13!sa4a7e6627e3e412ebce4cd5f9a12a970&ithint=file%2Cpptx&e=a3w8D6&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy9kYjkzNWJjMGE4MWI3YzEzL0VXTG1wNlEtZmk1QnZPVE5YNW9TcVhBQjFQNC1TczR5SUpVXy0yTEk5MjZYUWc_ZT1hM3c4RDY)
+![簡報](https://onedrive.live.com/:p:/g/personal/DB935BC0A81B7C13/EWLmp6Q-fi5BvOTNX5oSqXAB1P4-Ss4yIJU_-2LI926XQg?resid=DB935BC0A81B7C13!sa4a7e6627e3e412ebce4cd5f9a12a970&ithint=file%2Cpptx&e=a3w8D6&migratedtospo=true&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy9kYjkzNWJjMGE4MWI3YzEzL0VXTG1wNlEtZmk1QnZPVE5YNW9TcVhBQjFQNC1TczR5SUpVXy0yTEk5MjZYUWc_ZT1hM3c4RDY) 
 ## 📋 目錄
 - [組員資訊](#組員資訊)
 - [應用情境與使用案例](#應用情境與使用案例)
