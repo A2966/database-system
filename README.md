@@ -465,46 +465,7 @@ WHERE LINE_ID = 'Ub9ec4bdf56708afd81be89b65c16034f';
 ### 執行結果
 ![image](https://github.com/user-attachments/assets/0f9046f5-d978-4166-9962-2f58bccd1692)
 
-### 3. 計算食譜的熱量，碳水，蛋白質跟脂肪
-```sql
-CREATE VIEW view_match_ingredients AS
-SELECT
-  r.Recipe_Name,
-	r.Ingredient AS recipe_ingredient, i.*
-FROM recipe r
-JOIN ingredients i
-ON r.Ingredient LIKE CONCAT('%', i.Ingredient_Name, '%');
-```
-```sql
-CREATE VIEW View_recipe_sum AS
-SELECT 
-    Recipe_Name,
-    ROUND(SUM(calories_per_100g), 2) AS total_calories,
-    ROUND(SUM(protein_per_100g), 2) AS total_protein,
-    ROUND(SUM(fat_per_100g), 2) AS total_fat,
-    ROUND(SUM(carbs_per_100g), 2) AS total_carbs
-FROM view_match_ingredients
-GROUP BY Recipe_Name;
-```
-### 使用方式
-```sql
--- 將view_match_ingredients的同食譜輸出加總
-SELECT 
-    Recipe_Name,
-    ROUND(SUM(calories_per_100g), 2) AS total_calories,
-    ROUND(SUM(protein_per_100g), 2) AS total_protein,
-    ROUND(SUM(fat_per_100g), 2) AS total_fat,
-    ROUND(SUM(carbs_per_100g), 2) AS total_carbs
-FROM view_match_ingredients
-GROUP BY Recipe_Name;
-```
-### 說明
-- 此功能可查詢加總同食譜的熱量，碳水，蛋白質跟脂肪。
-- 詳情
-  - 結合 recipe 與 Ingredients 合成的view_match_ingredients檢視表，透過 JOIN 將食譜的熱量，碳水，蛋白質跟脂肪做加總。
- 
-### 執行結果
-![image](https://github.com/user-attachments/assets/789dbb02-521c-4363-ae1b-d7302c2e594f)
+
 
 ### 資料來源
 - 食譜資料來源(我們有經過同意使用此網站的食譜資料):[https://icook.tw/](https://icook.tw/)
