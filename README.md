@@ -1,5 +1,5 @@
 # 食譜查詢資料庫系統
-完整報告：https://docs.google.com/document/d/1XnYxtbKad_cpNTJ_7QKpYyJQcEL0qx2E/edit?usp=sharing&ouid=115670203116726374810&rtpof=true&sd=true
+[完整報告](https://docs.google.com/document/d/1XnYxtbKad_cpNTJ_7QKpYyJQcEL0qx2E/edit?usp=sharing&ouid=115670203116726374810&rtpof=true&sd=true)
 
 使用者輸入他所持有的食材，系統會依照使用者所提供的食材，進行最佳的食譜推薦。
 
